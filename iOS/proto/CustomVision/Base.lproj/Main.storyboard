@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Detective_Nanako" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWx-H9-rm4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6En-cL-0U5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <subviews>
+                                    <view opaque="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kmx-HW-VDO">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="459"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bpC-Eh-Bvn">
+                                        <rect key="frame" x="0.0" y="459" width="375" height="164"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="BGD-WT-Lla">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="164"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="akiyu.png" highlightedImage="akiyu.png" translatesAutoresizingMaskIntoConstraints="NO" id="zSn-PA-vCl">
+                                                    <rect key="frame" x="288" y="-7" width="103" height="180"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="103" id="NnA-h8-xm9"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uC-th-Ppd">
+                                                    <rect key="frame" x="22" y="8" width="81" height="32.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                                                    <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="zSn-PA-vCl" secondAttribute="bottom" constant="-9" id="OJW-jz-EJJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="zSn-PA-vCl" secondAttribute="trailing" constant="-16" id="Pc7-3b-lLX"/>
+                                                <constraint firstItem="3uC-th-Ppd" firstAttribute="leading" secondItem="BGD-WT-Lla" secondAttribute="leading" constant="22" id="d5o-U6-ipv"/>
+                                                <constraint firstItem="3uC-th-Ppd" firstAttribute="top" secondItem="BGD-WT-Lla" secondAttribute="topMargin" id="h2K-pE-lgK"/>
+                                                <constraint firstItem="zSn-PA-vCl" firstAttribute="top" secondItem="BGD-WT-Lla" secondAttribute="top" constant="-7" id="rOY-xA-frI"/>
+                                            </constraints>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="164" id="WXl-GQ-6BZ"/>
+                                        </constraints>
+                                        <blurEffect style="extraLight"/>
+                                    </visualEffectView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JWx-H9-rm4" firstAttribute="leading" secondItem="6En-cL-0U5" secondAttribute="leading" id="18t-FF-fHL"/>
+                            <constraint firstItem="6En-cL-0U5" firstAttribute="top" secondItem="JWx-H9-rm4" secondAttribute="top" id="7Yd-C1-a6p"/>
+                            <constraint firstAttribute="trailing" secondItem="6En-cL-0U5" secondAttribute="trailing" id="TDo-qr-cye"/>
+                            <constraint firstItem="JWx-H9-rm4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="X4F-3M-Pw0"/>
+                            <constraint firstItem="JWx-H9-rm4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="YAz-U7-RdC"/>
+                            <constraint firstItem="6En-cL-0U5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="b12-A7-VEF"/>
+                            <constraint firstItem="JWx-H9-rm4" firstAttribute="trailing" secondItem="6En-cL-0U5" secondAttribute="trailing" id="ilV-rg-7pp"/>
+                            <constraint firstItem="6En-cL-0U5" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="tfw-Li-Qyu"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="imageVew" destination="zSn-PA-vCl" id="Qdg-d4-7xT"/>
+                        <outlet property="lowerView" destination="bpC-Eh-Bvn" id="GzL-jd-4RL"/>
+                        <outlet property="previewView" destination="JWx-H9-rm4" id="7YC-f8-il8"/>
+                        <outlet property="stackView" destination="6En-cL-0U5" id="X5W-a0-atV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="akiyu.png" width="302" height="480"/>
+    </resources>
+</document>
