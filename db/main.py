@@ -25,7 +25,7 @@ def authorize(method):
     def wrapper(*args, **kwargs):
         header = request.headers.get("Authorization")
         if header is not None:
-            _,token = header.split()
+            token = header.split()[-1]
             try:
                 decoded = jwt.decode(token, key, algorithms=alg)
                 user = decoded["usr"]
