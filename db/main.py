@@ -2,9 +2,11 @@
 import os
 import sys
 import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from database import DataBase
 from client import Client
+import functools
+import jwt
 
 
 app = Flask(__name__)
@@ -13,58 +15,101 @@ app.config["JSON_SORT_KEYS"] = False
 
 db = DataBase()
 
+# Autherization setting
+key = "secret"
+alg = "HS256"
+
+# access token認証関数
+def autherize(method):
+    @functools.wraps(method)
+    def wrapper(*args, **kwargs):
+        try:
+            header = request.headers.get("Authorization")
+            _,token = header.split()
+            try:
+                decoded = jwt.decode(token, key, algorithms=alg)
+                user = decoded["usr"]
+            except jwt.DecodeError:
+                abort(400, message="Token is not valid.")
+
+            return method(user, *args, **kwargs)
+        except:
+            abort(400, message="Access token is required.")
+
+    return wrapper
+
 # 鮮度で最適化されたレシピのリクエストAPI
 @app.route("/request", methods=["POST"])
-def recipe_request():
-    data = request.get_json()
-    client = Client(data=data)
-    return jsonify({
-                    "status":"OK",
-                    "response":db.suggest(client=client)
-                    })
+@autherize
+def recipe_request(user):
+    if user in ["general", "admin"]:
+        data = request.get_json()
+        client = Client(data=data)
+        return jsonify({
+                        "status":"OK",
+                        "response":db.suggest(client=client)
+                        })
+    else:
+        abort(400, message="You are not authorized to perform this operation.")
 
 # 全レシピデータの取得API
 @app.route("/request/recipes", methods=["GET"])
-def get_recipes():
-    return jsonify({
-                    "status":"OK",
-                    "response":db.get_all()
-                    })
+@autherize
+def get_recipes(user):
+    if user in ["general", "admin"]:
+        return jsonify({
+                        "status":"OK",
+                        "response":db.get_recipes()
+                        })
+    else:
+        abort(400, message="You are not authorized to perform this operation.")
 
 # ingredientsテーブルの全情報取得API
 @app.route("/request/ingredients", methods=["GET"])
-def get_ingredients():
-    return jsonify({
-                    "status":"OK",
-                    "response":db.get_ingres()
-                    })
+@autherize
+def get_ingredients(user):
+    if user in ["general", "admin"]:
+        return jsonify({
+                        "status":"OK",
+                        "response":db.get_ingredients()
+                        })
+    else:
+        abort(400, message="You are not authorized to perform this operation.")
 
 # 新規レシピ登録API
 @app.route("/register", methods=["POST"])
-def recipe_register():
-    recipes = request.get_json()
-    db.register(recipes=recipes["recipes"])
-    return jsonify({
-                    "status":"OK"
-                    })
+@autherize
+def recipe_register(user):
+    if user is "admin":
+        recipes = request.get_json()
+        db.register(recipes=recipes["recipes"])
+        return jsonify({
+                        "status":"OK"
+                        })
+    else:
+        abort(400, message="You are not authorized to perform this operation.")
 
 # 権限ある人用のSQL操作API
 @app.route("/operate/sql", methods=["POST"])
-def db_exec():
-    sql = request.get_json()
-    try:
-        db.cursor.execute(sql["sql"])
-        res = db.cursor.fetchall()
-        return jsonify({
-                        "status":"OK",
-                        "response":res
-                        })
-    except:
-        return jsonify({
-                        "status":"Error",
-                        "response":"Unexpected error was occorred. \
-                                    Please check your mysql syntax"
-                        })
+@autherize
+def db_exec(user):
+    if user is "admin":
+        sql = request.get_json()
+        try:
+            db.cursor.execute(sql["sql"])
+            res = db.cursor.fetchall()
+            return jsonify({
+                            "status":"OK",
+                            "response":res
+                            })
+        except:
+            return jsonify({
+                            "status":"Error",
+                            "response":"Unexpected error was occorred. \
+                                        Please check your mysql syntax"
+                            })
+    else:
+        abort(400, message="You are not authorized to perform this operation.")
 
 # test
 @app.route("/test")

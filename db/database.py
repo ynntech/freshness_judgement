@@ -85,7 +85,7 @@ class DataBase:
                 "content":json.loads(res[1])
                 }
 
-    def get_all(self):
+    def get_recipes(self):
         term = f"select id, content from recipes"
         self.cursor.execute(term)
         res = self.cursor.fetchall()
@@ -93,6 +93,17 @@ class DataBase:
                 "recipes":[{
                             "id":r[0],
                             "content":json.loads(r[1])
+                            } for r in res]
+                }
+
+    def get_ingredients(self):
+        term = f"select * from ingredients"
+        self.cursor.execute(term)
+        res = self.cursor.fetchall()
+        return {
+                "recipes":[{
+                            "id":r[0],
+                            "content":r[1:]
                             } for r in res]
                 }
 
@@ -145,14 +156,3 @@ class DataBase:
             length += 1
 
         self.save()
-
-    def get_ingres(self):
-        term = f"select * from ingredients"
-        self.cursor.execute(term)
-        res = self.cursor.fetchall()
-        return {
-                "recipes":[{
-                            "id":r[0],
-                            "content":r[1:]
-                            } for r in res]
-                }
