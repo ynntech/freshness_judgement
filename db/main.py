@@ -23,19 +23,17 @@ alg = "HS256"
 def autherize(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
-        try:
-            header = request.headers.get("Authorization")
+        header = request.headers.get("Authorization")
+        if header is not None:
             _,token = header.split()
             try:
                 decoded = jwt.decode(token, key, algorithms=alg)
                 user = decoded["usr"]
             except jwt.DecodeError:
-                abort(400, message="Token is not valid.")
-
+                abort(400, "Token is not valid.")
             return method(user, *args, **kwargs)
-        except:
-            abort(400, message="Access token is required.")
-
+        else:
+            abort(400, "Access token is required.")
     return wrapper
 
 # 鮮度で最適化されたレシピのリクエストAPI
@@ -50,7 +48,7 @@ def recipe_request(user):
                         "response":db.suggest(client=client)
                         })
     else:
-        abort(400, message="You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")
 
 # 全レシピデータの取得API
 @app.route("/request/recipes", methods=["GET"])
@@ -62,7 +60,7 @@ def get_recipes(user):
                         "response":db.get_recipes()
                         })
     else:
-        abort(400, message="You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")
 
 # ingredientsテーブルの全情報取得API
 @app.route("/request/ingredients", methods=["GET"])
@@ -74,7 +72,7 @@ def get_ingredients(user):
                         "response":db.get_ingredients()
                         })
     else:
-        abort(400, message="You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")
 
 # 新規レシピ登録API
 @app.route("/register", methods=["POST"])
@@ -87,7 +85,7 @@ def recipe_register(user):
                         "status":"OK"
                         })
     else:
-        abort(400, message="You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")
 
 # 権限ある人用のSQL操作API
 @app.route("/operate/sql", methods=["POST"])
@@ -109,7 +107,7 @@ def db_exec(user):
                                         Please check your mysql syntax"
                             })
     else:
-        abort(400, message="You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")
 
 # test
 @app.route("/test")
