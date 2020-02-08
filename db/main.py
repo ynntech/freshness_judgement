@@ -15,12 +15,12 @@ app.config["JSON_SORT_KEYS"] = False
 
 db = DataBase()
 
-# Autherization setting
+# Authorization setting
 key = "secret"
 alg = "HS256"
 
 # access token認証関数
-def autherize(method):
+def authorize(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
         header = request.headers.get("Authorization")
@@ -38,7 +38,7 @@ def autherize(method):
 
 # 鮮度で最適化されたレシピのリクエストAPI
 @app.route("/request", methods=["POST"])
-@autherize
+@authorize
 def recipe_request(user):
     if user in ["general", "admin"]:
         data = request.get_json()
@@ -52,7 +52,7 @@ def recipe_request(user):
 
 # 全レシピデータの取得API
 @app.route("/request/recipes", methods=["GET"])
-@autherize
+@authorize
 def get_recipes(user):
     if user in ["general", "admin"]:
         return jsonify({
@@ -64,7 +64,7 @@ def get_recipes(user):
 
 # ingredientsテーブルの全情報取得API
 @app.route("/request/ingredients", methods=["GET"])
-@autherize
+@authorize
 def get_ingredients(user):
     if user in ["general", "admin"]:
         return jsonify({
@@ -76,7 +76,7 @@ def get_ingredients(user):
 
 # 新規レシピ登録API
 @app.route("/register", methods=["POST"])
-@autherize
+@authorize
 def recipe_register(user):
     if user is "admin":
         recipes = request.get_json()
@@ -89,7 +89,7 @@ def recipe_register(user):
 
 # 権限ある人用のSQL操作API
 @app.route("/operate/sql", methods=["POST"])
-@autherize
+@authorize
 def db_exec(user):
     if user is "admin":
         sql = request.get_json()
