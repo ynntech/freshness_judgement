@@ -1,0 +1,12 @@
+{
+  "ingredients":[
+    {
+      "class":"vegetable/seasoning/meet/other",
+      "name":"",
+      "amount":1,
+      "freshness":100
+    }
+  ],
+  "people":1,
+  "show":5
+}
