@@ -9,46 +9,16 @@
 // TODO: クライアント側で鮮度フィルターかけて必要そうなやつを整形してサーバーに投げる
 
 import UIKit
-
 import RealmSwift
-
 
 class FirstViewController: UIViewController {
 
     @IBOutlet weak var name_label: UILabel!
-    
     @IBOutlet weak var textbox: UITextField!
-    
     @IBOutlet weak var button: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    /*
-        //これでGET
-        let post_url = URL(string: "http://0.0.0.0:8000/")
-        var request = URLRequest(url: post_url!)
-        request.httpMethod = "GET"
-        let get_task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error == nil, let data = data, let response = response as? HTTPURLResponse {
-                // HTTPヘッダの取得
-                print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
-                // HTTPステータスコード
-                print("statusCode: \(response.statusCode)")
-                
-                let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
-                print("result is:\(result)")
-                
-//                let dic = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
-//                print("class: \(dic["class"] as! String)")
-//                print("fleshness: \(dic["fleshness"] as! Double)")
-
-
-            }
-        }
-        get_task.resume()
-        */
-        
         //recipeのpost
         let session_config: URLSessionConfiguration = URLSessionConfiguration.default
         let recipe_session: URLSession = URLSession(configuration: session_config)
@@ -70,9 +40,6 @@ class FirstViewController: UIViewController {
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.addValue("\(accessToken)", forHTTPHeaderField: "Authorization")
         
-
-
-        
         let posttest = Vegetable()
         posttest.item_class = "vegetable"
         posttest.name = "test"
@@ -85,7 +52,6 @@ class FirstViewController: UIViewController {
          }
          */
         
-
         //書き換わるならvarかも
         let params:[String: Any] = [
           "ingredients":[
@@ -104,9 +70,8 @@ class FirstViewController: UIViewController {
         
         
         let post_task = recipe_session.dataTask(with: req, completionHandler: { (data, response, error) in
-        //let post_task = URLSession.shared.dataTask(with: req, completionHandler: { (data, response, error) in
+            
             if error == nil, let data = data, let response = response as? HTTPURLResponse {
-                // do something
                 print("response.statusCode:\(response.statusCode)")
                 let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
                 print("result is:\(result)")

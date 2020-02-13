@@ -18,10 +18,7 @@ class SecondViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
         let base64String:String = "hogehoge"
-        
         
         let judge_session = URLSession.shared
         let judge_url: URL = URL(string: "https://なんちゃらかんちゃら")!
