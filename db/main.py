@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os
 import sys
 import datetime
@@ -20,6 +20,8 @@ key = "secret"
 alg = "HS256"
 
 # access token認証関数
+
+
 def authorize(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
@@ -28,7 +30,7 @@ def authorize(method):
             token = header.split()[-1]
             try:
                 decoded = jwt.decode(token, key, algorithms=alg)
-                user = decoded["usr"]
+                user = decoded["usr"]  # ここが気になる byなかや
             except jwt.DecodeError:
                 abort(400, "Token is not valid.")
             return method(user, *args, **kwargs)
@@ -44,9 +46,9 @@ def recipe_request(user):
         data = request.get_json()
         client = Client(data=data)
         return jsonify({
-                        "status":"OK",
-                        "response":db.suggest(client=client)
-                        })
+            "status": "OK",
+            "response": db.suggest(client=client)
+        })
     else:
         abort(400, "You are not authorized to perform this operation.")
 
@@ -56,9 +58,9 @@ def recipe_request(user):
 def get_recipes(user):
     if user in ["general", "admin"]:
         return jsonify({
-                        "status":"OK",
-                        "response":db.get_recipes()
-                        })
+            "status": "OK",
+            "response": db.get_recipes()
+        })
     else:
         abort(400, "You are not authorized to perform this operation.")
 
@@ -68,9 +70,9 @@ def get_recipes(user):
 def get_ingredients(user):
     if user in ["general", "admin"]:
         return jsonify({
-                        "status":"OK",
-                        "response":db.get_ingredients()
-                        })
+            "status": "OK",
+            "response": db.get_ingredients()
+        })
     else:
         abort(400, "You are not authorized to perform this operation.")
 
@@ -82,8 +84,8 @@ def recipe_register(user):
         recipes = request.get_json()
         db.register(recipes=recipes["recipes"])
         return jsonify({
-                        "status":"OK"
-                        })
+            "status": "OK"
+        })
     else:
         abort(400, "You are not authorized to perform this operation.")
 
@@ -97,15 +99,15 @@ def db_exec(user):
             db.cursor.execute(sql["sql"])
             res = db.cursor.fetchall()
             return jsonify({
-                            "status":"OK",
-                            "response":res
-                            })
+                "status": "OK",
+                "response": res
+            })
         except:
             return jsonify({
-                            "status":"Error",
-                            "response":"Unexpected error was occorred. \
+                "status": "Error",
+                "response": "Unexpected error was occorred. \
                                         Please check your mysql syntax"
-                            })
+            })
     else:
         abort(400, "You are not authorized to perform this operation.")
 
@@ -114,19 +116,21 @@ def db_exec(user):
 def test():
     return "test"
 
+
 @app.route("/test/post", methods=["POST"])
 def test_post():
     data = request.get_json()
     return jsonify({
-                    "status":"ok",
-                    "response":data
-                    })
+        "status": "ok",
+        "response": data
+    })
+
 
 @app.route("/test/get", methods=["GET"])
 def test_get():
     return jsonify({
-                    "status":"ok"
-                    })
+        "status": "ok"
+    })
 
 
 if __name__ == "__main__":

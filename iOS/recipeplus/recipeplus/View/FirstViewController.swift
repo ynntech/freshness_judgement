@@ -37,8 +37,11 @@ class FirstViewController: UIViewController {
         //////////////////////////
         
         let accessToken = (name == "admin") ? admin_token : user_Token
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.addValue("\(accessToken)", forHTTPHeaderField: "Authorization")
+        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        req.addValue("utf-8", forHTTPHeaderField: "Accept-Charset")
+       
+        
         
         let posttest = Vegetable()
         posttest.item_class = "vegetable"
