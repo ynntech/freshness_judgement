@@ -149,7 +149,7 @@ class DataBase:
                                             datetime.timedelta(hours=9)))
             value = f"values ({str(length)},\
                                 \'{json.dumps(recipe, ensure_ascii=False)}\',\
-                                {time.strftime('%Y%m%d-%H%M%S')})"
+                                {time.strftime('%Y-%m-%d %H:%M:%S')})"
             term = f"insert into recipes (id,content,created) {value}"
             db.execute(term)
 
