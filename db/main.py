@@ -80,7 +80,7 @@ def get_ingredients(user):
 @app.route("/register", methods=["POST"])
 @authorize
 def recipe_register(user):
-    if user is "admin":
+    if user == "admin":
         recipes = request.get_json()
         db.register(recipes=recipes["recipes"])
         return jsonify({
@@ -93,7 +93,7 @@ def recipe_register(user):
 @app.route("/operate/sql", methods=["POST"])
 @authorize
 def db_exec(user):
-    if user is "admin":
+    if user == "admin":
         sql = request.get_json()
         try:
             db.cursor.execute(sql["sql"])
