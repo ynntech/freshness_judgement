@@ -34,7 +34,7 @@ class FirstViewController: UIViewController {
         
         //////////////////////////
         
-        let name:String = "user"
+        let name:String = "admin"
 
         //////////////////////////
         
