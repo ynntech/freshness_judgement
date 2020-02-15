@@ -22,7 +22,7 @@ class FirstViewController: UIViewController {
         //recipeのpost
         let session_config: URLSessionConfiguration = URLSessionConfiguration.default
         let recipe_session: URLSession = URLSession(configuration: session_config)
-        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/request")!
+        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/test/post")!
         var req: URLRequest = URLRequest(url: recipe_url)
         req.httpMethod = "POST"
         //通常のアクセストークンでひとまずは。
@@ -32,7 +32,7 @@ class FirstViewController: UIViewController {
         
         //////////////////////////
         
-        let name:String = "user"
+        let name:String = "admin"
 
         //////////////////////////
         

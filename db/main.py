@@ -50,7 +50,7 @@ def recipe_request(user):
             "response": db.suggest(client=client)
         })
     else:
-        abort(400, "You are not authorized to perform this operation.")
+        abort(400, "You are not authorized to perform this operation.")∑
 
 # 全レシピデータの取得API
 @app.route("/request/recipes", methods=["GET"])
