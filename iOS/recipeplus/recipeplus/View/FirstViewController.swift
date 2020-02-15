@@ -24,7 +24,7 @@ class FirstViewController: UIViewController {
         
         let session_config: URLSessionConfiguration = URLSessionConfiguration.default
         let recipe_session: URLSession = URLSession(configuration: session_config)
-        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/test/post")!
+        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/request")!
         var req: URLRequest = URLRequest(url: recipe_url)
         
         //通常のアクセストークンでひとまずは。
@@ -34,7 +34,7 @@ class FirstViewController: UIViewController {
         
         //////////////////////////
         
-        let name:String = "admin"
+        let name:String = "user"
 
         //////////////////////////
         
@@ -50,9 +50,9 @@ class FirstViewController: UIViewController {
         
         let posttest = Vegetable()
         posttest.item_class = "vegetable"
-        posttest.name = "test"
-        posttest.amount = 3
-        posttest.freshness = 0.0
+        posttest.name = "にんじん"
+        posttest.amount = 3.0
+        posttest.freshness = 50.0
         /*
          本当に呼び出すときはこれでフィルタリングとか
          for item in realm.objects(Vegetable.self).filter("name == %@",textbox.text ?? "aaa"){
@@ -103,7 +103,7 @@ class FirstViewController: UIViewController {
         
     
         test.item_class = "vegetable"
-        test.name = "test"
+        test.name = "にんじん"
         test.amount = 3
         test.freshness = 0.0
         

@@ -21,11 +21,11 @@ class SecondViewController: UIViewController {
         let base64String:String = "hogehoge"
         
         let judge_session = URLSession.shared
-        let judge_url: URL = URL(string: "http://3.13.39.141:8888/test/post")!
+        let judge_url: URL = URL(string: "http://3.13.39.141:8888/")!
         var req: URLRequest = URLRequest(url: judge_url)
         req.httpMethod = "POST"
         req.setValue("application/json; charset=utf-8", forHTTPHeaderField:"ContentType")
-        
+        print("aaaaa")
         // Build our API request
         let jsonRequest = [
             "requests": [
