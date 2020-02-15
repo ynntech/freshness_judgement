@@ -29,9 +29,43 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         //プレビュー表示
         self.ImageView.image = image
+        let data:NSData = image.pngData()! as NSData
+        let base64String = data.base64EncodedString(options: .lineLength64Characters)
         //よかったら保存
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        if image != nil{
+            let judge_session = URLSession.shared
+            let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/fresshness")!
+            var req: URLRequest = URLRequest(url: judge_url)
+            req.httpMethod = "POST"
+            req.setValue("application/json; charset=utf-8", forHTTPHeaderField:"ContentType")
+            
+            // Build our API request
+            let jsonRequest = [
+                "file":base64String
+            ]
+            
+
+            req.httpBody = try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
+            let post_task = judge_session.dataTask(with: req, completionHandler: { (data, response, error) in
+                 //let post_task = URLSession.shared.dataTask(with: req, completionHandler: { (data, response, error) in
+                if error == nil, let data = data, let response = response as? HTTPURLResponse {
+                         // do something
+                    print(String(data: data, encoding: .utf8)!)
+                    print("response.statusCode:\(response.statusCode)")
+                    let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
+                    print("result is:\(result)")
+                    }
+                 })
+                post_task.resume()
+        }
+         
+        
         self.dismiss(animated: true)
+        
+        
+        
+        
     }
     
     override func viewDidLoad() {

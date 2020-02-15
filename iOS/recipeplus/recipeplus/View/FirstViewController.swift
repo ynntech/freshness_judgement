@@ -10,6 +10,7 @@
 
 import UIKit
 import RealmSwift
+import Foundation
 
 class FirstViewController: UIViewController {
 
@@ -20,11 +21,12 @@ class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //recipeのpost
+        
         let session_config: URLSessionConfiguration = URLSessionConfiguration.default
         let recipe_session: URLSession = URLSession(configuration: session_config)
         let recipe_url: URL = URL(string: "http://3.13.39.141:8888/test/post")!
         var req: URLRequest = URLRequest(url: recipe_url)
-        req.httpMethod = "POST"
+        
         //通常のアクセストークンでひとまずは。
         
         let user_Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3IiOiJnZW5lcmFsIn0.oT0j64dO3uZmN4_UMHFDIO4-Mvq7MDP-0Xe8a7ZYxR8"
@@ -32,14 +34,17 @@ class FirstViewController: UIViewController {
         
         //////////////////////////
         
-        let name:String = "admin"
+        let name:String = "user"
 
         //////////////////////////
         
         let accessToken = (name == "admin") ? admin_token : user_Token
-        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        req.addValue("utf-8", forHTTPHeaderField: "Accept-Charset")
+        req.addValue("application/json", forHTTPHeaderField: "Accept")
+        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        req.httpMethod = "POST"
+        
        
         
         
@@ -69,7 +74,7 @@ class FirstViewController: UIViewController {
           "show":5
         ]
 
-        req.httpBody = try!JSONSerialization.data(withJSONObject: params, options:[])
+        req.httpBody = try!JSONSerialization.data(withJSONObject: params)
         
         
         let post_task = recipe_session.dataTask(with: req, completionHandler: { (data, response, error) in
