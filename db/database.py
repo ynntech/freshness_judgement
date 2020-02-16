@@ -132,6 +132,7 @@ class DataBase:
                 values.append(people)
 
             for ingredient in recipe["ingredients"]:
+                ingredient["amount"] = str(ingredient["amount"])
                 if ingredient["item_class"] == "vegetable":
                     name = ingredient["name"]
                     amount = f"{name}_amount"
@@ -141,13 +142,13 @@ class DataBase:
                                     float default null")
                         fields.append(amount)
                     variables.append(amount)
-                    values.append(ingredient["amount"])
+                    values.append(float(ingredient["amount"]))
                     if freshness not in fields:
                         db.execute(f"alter table ingredients add {freshness} \
                                     float default null")
                         fields.append(freshness)
                     variables.append(freshness)
-                    values.append(ingredient["freshness"])
+                    values.append(float(ingredient["freshness"]))
 
             term = f"insert into ingredients (id,{','.join(variables)}) \
                     values ({str(length)},{','.join(map(str,values))})"

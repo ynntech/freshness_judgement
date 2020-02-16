@@ -80,7 +80,7 @@ def recipe_register(user):
 # 権限ある人用のSQL操作API
 @app.route("/operate/sql", methods=["POST"])
 @authorize
-def db_reset(user):
+def db_rest(user):
     if user == "admin":
         sql = request.get_json()
         try:

@@ -13,7 +13,7 @@ def check_request(data):
                     abort(400, "\"item_class\" key is required \
                                 in each ingredient.")
                 else:
-                    if  (ingredient["item_name"] not in
+                    if  (ingredient["item_class"] not in
                             ["vegetable", "seasoning", "meet", "other"]):
                         abort(400, "Bad request (\"item_class\"). \
                                     Choose from vegetable/seasoning/meet/other.")

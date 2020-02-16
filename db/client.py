@@ -25,8 +25,8 @@ class Client:
                 continue
             else:
                 item_name = ingredient["name"]
-                item_amount = ingredient["amount"]
-                item_freshness = ingredient["freshness"]
+                item_amount = float(ingredient["amount"])
+                item_freshness = float(ingredient["freshness"])
                 vegis.append(Item(name=item_name, amount=item_amount,
                                 freshness=item_freshness, item_class=item_class))
         self.state = vegis
