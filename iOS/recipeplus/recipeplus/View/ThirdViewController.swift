@@ -40,10 +40,12 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
             let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
             var req: URLRequest = URLRequest(url: judge_url)
             req.httpMethod = "POST"
-            req.setValue("application/json; charset=utf-8", forHTTPHeaderField:"ContentType")
+            req.addValue("application/json", forHTTPHeaderField: "Accept")
+            req.addValue("application/json", forHTTPHeaderField:"ContentType")
+            
             
             // Build our API request
-            let jsonRequest = [
+            let jsonRequest : [String:Any] = [
                 "file":base64String
             ]
             

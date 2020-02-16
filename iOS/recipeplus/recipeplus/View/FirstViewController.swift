@@ -14,13 +14,13 @@ import Foundation
 
 struct Test:Codable{
     var status:String
-    var peaple :Int
+    var people :Int
     private enum CodingKeys: String,CodingKey{
         case status
         case response
     }
     private enum ResponceKeys: String,CodingKey{
-        case peaple
+        case people
     }
     
     init(from decoder: Decoder) throws {
@@ -28,14 +28,14 @@ struct Test:Codable{
         status = try values.decode(String.self,forKey:.status)
         
         let responce = try values.nestedContainer(keyedBy: ResponceKeys.self, forKey: .response)
-        peaple = try responce.decode(Int.self, forKey: .peaple)
+        people = try responce.decode(Int.self, forKey: .people)
     }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(status, forKey: .status)
 
         var responce = container.nestedContainer(keyedBy: ResponceKeys.self, forKey: .response)
-        try responce.encode(peaple, forKey: .peaple)
+        try responce.encode(people, forKey: .people)
     }
 }
 
@@ -128,12 +128,11 @@ class FirstViewController: UIViewController {
 //                print("status###: \(vegitest?.status)")
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
-                let encoded = try! encoder.encode(vegitest)
+                let encoded = try! encoder.encode(vegitest?.people)
                 print(String(data: encoded, encoding: .utf8)!)
             }
         })
         post_task.resume()
-        print(post_task.currentRequest?.httpBody as Any) // nil
         
         
         
