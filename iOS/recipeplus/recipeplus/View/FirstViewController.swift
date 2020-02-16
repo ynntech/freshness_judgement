@@ -85,15 +85,97 @@ class FirstViewController: UIViewController {
                 print("response.statusCode:\(response.statusCode)")
                 let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
                 print("result is:\(result)")
-  
+                do{
+                    
+                    let jsondata = """
+                            {
+                                "status":"OK",
+                                "response":
+                                {
+                                "recipes": [
+                                    {
+                                    "name":"じゃがいもとにんじんのきんぴら",
+                                    "author":"大庭英子",
+                                    "people":4,
+                                    "comment":"aa",
+                                    "guidance":[
+                                        {
+                                        "process":"じゃがいもは皮をむき、細切りにする。水にさっとさらしてアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
+                                        },
+                                        {
+                                    "process":"鍋にサラダ油大さじ1を中火で熱し、にんじん、じゃがいもを順に加えて炒める。全体に油が回ったらだし汁1/2カップを加え、煮立ったらAを加える。汁けがなくなるまで中火で炒めて器に盛り、白いりごまをふる。"
+                                        }
+                                    ],
+                                    "catchphrase":"じゃがいもとにんじんに甘辛てアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
+                                    "ingredients":[
+                                        {
+                                        "name":"じゃがいも",
+                                        "class":"vegetable",
+                                        "amount":2,"freshness":50
+
+                                        },
+                                        {
+                                        "name":"にんじん",
+                                        "class":"vegetable",
+                                        "amount":1,"freshness":50
+
+                                        },
+                                        {
+                                        "name":"白いりごま",
+                                        "class":"seasoning",
+                                        "amount":"少々",
+                                        "freshness":100
+
+                                        },
+                                        {
+                                        "name":"みりん",
+                                        "class":"seasoning",
+                                        "amount":"大さじ1",
+                                        "freshness":100
+
+                                        },
+                                        {
+                                        "name":"醤油",
+                                        "class":"seasoning",
+                                        "amount":"大さじ1",
+                                        "freshness":100
+
+                                        },
+                                        {
+                                        "name":"サラダ油",
+                                        "class":"other",
+                                        "amount":4,
+                                        "freshness":100
+
+                                        },
+                                        {
+                                        "name":"だし汁",
+                                        "class":"other",
+                                        "amount":4,
+                                        "freshness":100
+
+                                        }
+                                        }
+                                    ]
+                                }
+                            }
+                           """.data(using: .utf8)!
+                    print("でーたよんだよ")
+                    
+                    
+                    let recipe_data = try JSONDecoder().decode(Recipe.self, from: jsondata)
+                    //                print(vegitest as Any)
+                    //                print("status###: \(vegitest?.status)")
+                     print("デコードしたよ")
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = .prettyPrinted
+                    let encoded = try! encoder.encode(recipe_data)
+                     print("えんこーどしたよ")
+                    print(String(data: encoded, encoding: .utf8)!)
+                }catch let tryerror as NSError{
+                    print(tryerror.localizedDescription)
+                }
                 
-                let recipe_data = try?JSONDecoder().decode(Recipe.self, from: data)
-//                print(vegitest as Any)
-//                print("status###: \(vegitest?.status)")
-                let encoder = JSONEncoder()
-                encoder.outputFormatting = .prettyPrinted
-                let encoded = try! encoder.encode(recipe_data)
-                print(String(data: encoded, encoding: .utf8)!)
             }
         })
         post_task.resume()

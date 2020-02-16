@@ -24,6 +24,7 @@ struct Recipe: Codable {
     func encode(to encoder: Encoder) throws {
        var container = encoder.container(keyedBy: Recipe.self)
        try container.encode(status, forKey: .status)
+       try container.encode(response, forKey: .response)
     }
     
     
@@ -68,9 +69,9 @@ struct Recipe: Codable {
                 author = try values.decode(String.self,forKey:.author)
                 people = try values.decode(Int.self,forKey:.people)
                 comment = try values.decode(String.self,forKey:.comment)
-                guidance = try (values.decodeIfPresent([Guidance].self, forKey: .guidance))!
+                guidance = try values.decode([Guidance].self, forKey: .guidance)
                 catchphrase = try values.decode(String.self,forKey:.catchphrase)
-                ingredients = try values.decodeIfPresent([Ingredients].self, forKey: .ingredients)!
+                ingredients = try values.decode([Ingredients].self, forKey: .ingredients)
             }
             func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: Recipes.self)
@@ -83,7 +84,21 @@ struct Recipe: Codable {
                 try container.encode(ingredients, forKey: .ingredients)
             }
             
-            
+            struct Guidance: Codable{
+                var process: String
+               // var thumbnail: String
+                private enum Guidance: String,CodingKey{
+                       case process
+                   }
+                init(from decoder: Decoder) throws {
+                    let values = try decoder.container(keyedBy: Guidance.self)
+                    process = try values.decode(String.self,forKey:.process)
+                }
+                func encode(to encoder: Encoder) throws {
+                    var container = encoder.container(keyedBy: Guidance.self)
+                    try container.encode(process, forKey: .process)
+                }
+            }
             
             struct Ingredients: Codable{
                 var name: String
@@ -113,21 +128,7 @@ struct Recipe: Codable {
                 }
             }
             
-            struct Guidance: Codable{
-                var process: String
-               // var thumbnail: String
-                private enum Guidance: String,CodingKey{
-                       case process
-                   }
-                init(from decoder: Decoder) throws {
-                    let values = try decoder.container(keyedBy: Guidance.self)
-                    process = try values.decode(String.self,forKey:.process)
-                }
-                func encode(to encoder: Encoder) throws {
-                    var container = encoder.container(keyedBy: Guidance.self)
-                    try container.encode(process, forKey: .process)
-                }
-            }
+            
         }
     }
 }
