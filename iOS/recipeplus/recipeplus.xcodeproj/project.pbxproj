@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2D8D0230ACA0192EFAE9AC8B /* libPods-recipeplusTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F045738F074DA27364F9CE6 /* libPods-recipeplusTests.a */; };
 		693DD72C4A48F64DEB957A29 /* libPods-recipeplus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A7720F82B975DA9F548DB5 /* libPods-recipeplus.a */; };
 		D10D6E3023F1577D00CAFC9B /* Vegetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D6E2F23F1577D00CAFC9B /* Vegetable.swift */; };
+		D1D304F023F90AC2007229BA /* recipe_struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D304EF23F90AC2007229BA /* recipe_struct.swift */; };
+		D1D304F223F91E9D007229BA /* freshness_struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D304F123F91E9D007229BA /* freshness_struct.swift */; };
 		D1F2B9BA23ED764A00CEBE26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F2B9B923ED764A00CEBE26 /* AppDelegate.swift */; };
 		D1F2B9BC23ED764A00CEBE26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F2B9BB23ED764A00CEBE26 /* SceneDelegate.swift */; };
 		D1F2B9BE23ED764A00CEBE26 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F2B9BD23ED764A00CEBE26 /* FirstViewController.swift */; };
@@ -51,6 +53,8 @@
 		CB40F0BDD2DFCB19154CDEC7 /* Pods-recipeplusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipeplusTests.release.xcconfig"; path = "Target Support Files/Pods-recipeplusTests/Pods-recipeplusTests.release.xcconfig"; sourceTree = "<group>"; };
 		CBDDB5B04B1E22CB83C67662 /* Pods-recipeplus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipeplus.release.xcconfig"; path = "Target Support Files/Pods-recipeplus/Pods-recipeplus.release.xcconfig"; sourceTree = "<group>"; };
 		D10D6E2F23F1577D00CAFC9B /* Vegetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vegetable.swift; sourceTree = "<group>"; };
+		D1D304EF23F90AC2007229BA /* recipe_struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipe_struct.swift; sourceTree = "<group>"; };
+		D1D304F123F91E9D007229BA /* freshness_struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freshness_struct.swift; sourceTree = "<group>"; };
 		D1F2B9B623ED764A00CEBE26 /* recipeplus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = recipeplus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1F2B9B923ED764A00CEBE26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1F2B9BB23ED764A00CEBE26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				D10D6E2F23F1577D00CAFC9B /* Vegetable.swift */,
+				D1D304EF23F90AC2007229BA /* recipe_struct.swift */,
+				D1D304F123F91E9D007229BA /* freshness_struct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -396,10 +402,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D304F223F91E9D007229BA /* freshness_struct.swift in Sources */,
 				D1F2B9C023ED764A00CEBE26 /* SecondViewController.swift in Sources */,
 				D1F2B9BE23ED764A00CEBE26 /* FirstViewController.swift in Sources */,
 				D1F2BA2A23ED8F7F00CEBE26 /* ThirdViewController.swift in Sources */,
 				D1F2B9BA23ED764A00CEBE26 /* AppDelegate.swift in Sources */,
+				D1D304F023F90AC2007229BA /* recipe_struct.swift in Sources */,
 				D10D6E3023F1577D00CAFC9B /* Vegetable.swift in Sources */,
 				D1F2B9BC23ED764A00CEBE26 /* SceneDelegate.swift in Sources */,
 			);

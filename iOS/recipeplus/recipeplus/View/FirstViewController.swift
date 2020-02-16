@@ -11,7 +11,7 @@
 import UIKit
 import RealmSwift
 import Foundation
-
+//冷蔵庫情報送信&レシピ表示
 class FirstViewController: UIViewController {
 
     @IBOutlet weak var name_label: UILabel!
@@ -22,8 +22,9 @@ class FirstViewController: UIViewController {
         super.viewDidLoad()
         //recipeのpost
         
-        let session_config: URLSessionConfiguration = URLSessionConfiguration.default
-        let recipe_session: URLSession = URLSession(configuration: session_config)
+//        let session_config: URLSessionConfiguration = URLSessionConfiguration.default
+//        let recipe_session: URLSession = URLSession(configuration: session_config)
+        let recipe_session = URLSession.shared
         let recipe_url: URL = URL(string: "http://3.13.39.141:8888/request")!
         var req: URLRequest = URLRequest(url: recipe_url)
         
@@ -46,8 +47,6 @@ class FirstViewController: UIViewController {
         req.httpMethod = "POST"
         
        
-        
-        
         let posttest = Vegetable()
         posttest.item_class = "vegetable"
         posttest.name = "にんじん"
@@ -64,18 +63,17 @@ class FirstViewController: UIViewController {
         let params:[String: Any] = [
           "ingredients":[
             [
-              "class":posttest.item_class,
+              "item_class":posttest.item_class,
               "name":posttest.name,
               "amount":posttest.amount,
               "freshness":posttest.freshness
             ]
           ],
           "people":1,
-          "show":5
+          "show":1
         ]
 
         req.httpBody = try!JSONSerialization.data(withJSONObject: params)
-        
         
         let post_task = recipe_session.dataTask(with: req, completionHandler: { (data, response, error) in
             

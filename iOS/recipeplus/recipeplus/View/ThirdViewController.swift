@@ -34,6 +34,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         //よかったら保存
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         if image != nil{
+            print("通信中")
             let judge_session = URLSession.shared
             let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/fresshness")!
             var req: URLRequest = URLRequest(url: judge_url)
