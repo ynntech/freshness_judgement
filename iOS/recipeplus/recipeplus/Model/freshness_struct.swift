@@ -9,8 +9,8 @@
 import Foundation
 struct Freshness:Codable{
     var status:String
-    var name:String
-    var freshness:Double
+    var name:String?
+    var freshness:Double?
     
     private enum CodingKeys: String,CodingKey{
         case status

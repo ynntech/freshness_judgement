@@ -9,8 +9,8 @@
 import Foundation
 // Codableの継承を忘れないこと！
 struct Recipe: Codable {
-    var status: String
-    var response : Response
+    var status: String?
+    var response : Response?
     
     private enum Recipe: String,CodingKey{
        case status
@@ -29,7 +29,7 @@ struct Recipe: Codable {
     
     
     struct Response: Codable{
-        var recipes: [Recipes]
+        var recipes: [Recipes]?
 
         private enum Response: String,CodingKey{
            case recipes
@@ -44,14 +44,14 @@ struct Recipe: Codable {
         }
         
         struct Recipes: Codable {
-            var name: String
-            var author: String
-            var people: Int
-            var comment: String
-            var guidance: [Guidance]
+            var name: String?
+            var author: String?
+            var people: Int?
+            var comment: String?
+            var guidance: [Guidance]?
        //   var thumbnail: String
-            var catchphrase: String
-            var ingredients:[Ingredients]
+            var catchphrase: String?
+            var ingredients:[Ingredients]?
             
             private enum Recipes: String,CodingKey{
                 case name
@@ -85,7 +85,7 @@ struct Recipe: Codable {
             }
             
             struct Guidance: Codable{
-                var process: String
+                var process: String?
                // var thumbnail: String
                 private enum Guidance: String,CodingKey{
                        case process
@@ -101,10 +101,10 @@ struct Recipe: Codable {
             }
             
             struct Ingredients: Codable{
-                var name: String
-                var amount: Double
-                var freshness: Double
-                var item_class: String
+                var name: String?
+                var amount:String?
+                var freshness: Double?
+                var item_class: String?
                 
                 private enum Ingredients: String,CodingKey{
                     case name
@@ -115,7 +115,7 @@ struct Recipe: Codable {
                 init(from decoder: Decoder) throws {
                     let values = try decoder.container(keyedBy: Ingredients.self)
                     name = try values.decode(String.self,forKey:.name)
-                    amount = try values.decode(Double.self,forKey:.amount)
+                    amount = try values.decode(String.self,forKey:.amount)
                     freshness = try values.decode(Double.self,forKey:.freshness)
                     item_class = try values.decode(String.self,forKey:.item_class)
                 }

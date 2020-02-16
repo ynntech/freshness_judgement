@@ -88,73 +88,69 @@ class FirstViewController: UIViewController {
                 do{
                     
                     let jsondata = """
-                            {
-                                "status":"OK",
-                                "response":
-                                {
-                                "recipes": [
                                     {
-                                    "name":"じゃがいもとにんじんのきんぴら",
-                                    "author":"大庭英子",
-                                    "people":4,
-                                    "comment":"aa",
-                                    "guidance":[
+                                        "status":"OK",
+                                        "response":
                                         {
-                                        "process":"じゃがいもは皮をむき、細切りにする。水にさっとさらしてアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
-                                        },
-                                        {
-                                    "process":"鍋にサラダ油大さじ1を中火で熱し、にんじん、じゃがいもを順に加えて炒める。全体に油が回ったらだし汁1/2カップを加え、煮立ったらAを加える。汁けがなくなるまで中火で炒めて器に盛り、白いりごまをふる。"
-                                        }
-                                    ],
-                                    "catchphrase":"じゃがいもとにんじんに甘辛てアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
-                                    "ingredients":[
-                                        {
-                                        "name":"じゃがいも",
-                                        "class":"vegetable",
-                                        "amount":2,"freshness":50
-
-                                        },
-                                        {
-                                        "name":"にんじん",
-                                        "class":"vegetable",
-                                        "amount":1,"freshness":50
-
-                                        },
-                                        {
-                                        "name":"白いりごま",
-                                        "class":"seasoning",
-                                        "amount":"少々",
-                                        "freshness":100
-
-                                        },
-                                        {
-                                        "name":"みりん",
-                                        "class":"seasoning",
-                                        "amount":"大さじ1",
-                                        "freshness":100
-
-                                        },
-                                        {
-                                        "name":"醤油",
-                                        "class":"seasoning",
-                                        "amount":"大さじ1",
-                                        "freshness":100
-
-                                        },
-                                        {
-                                        "name":"サラダ油",
-                                        "class":"other",
-                                        "amount":4,
-                                        "freshness":100
-
-                                        },
-                                        {
-                                        "name":"だし汁",
-                                        "class":"other",
-                                        "amount":4,
-                                        "freshness":100
-
-                                        }
+                                        "recipes": [
+                                            {
+                                            "name":"じゃがいもとにんじんのきんぴら",
+                                            "author":"大庭英子",
+                                            "people":4,
+                                            "comment":"aa",
+                                            "guidance":[
+                                                {
+                                                "process":"じゃがいもは皮をむき、細切りにする。水にさっとさらしてアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
+                                                },
+                                                {
+                                                "process":"鍋にサラダ油大さじ1を中火で熱し、にんじん、じゃがいもを順に加えて炒める。全体に油が回ったらだし汁1/2カップを加え、煮立ったらAを加える。汁けがなくなるまで中火で炒めて器に盛り、白いりごまをふる。"
+                                                }
+                                                ],
+                                            "catchphrase":"じゃがいもとにんじんに甘辛てアクを抜き、水けをきる。にんじんは皮をむき、長さ4cmの細切りにする。",
+                                            "ingredients":[
+                                                {
+                                                "name":"じゃがいも",
+                                                "item_class":"vegetable",
+                                                "amount":"2",
+                                                "freshness":50
+                                                },
+                                                {
+                                                "name":"にんじん",
+                                                "item_class":"vegetable",
+                                                "amount":"1",
+                                                "freshness":50
+                                                },
+                                                {
+                                                "name":"白いりごま",
+                                                "item_class":"seasoning",
+                                                "amount":"4",
+                                                "freshness":100
+                                                },
+                                                {
+                                                "name":"みりん",
+                                                "item_class":"seasoning",
+                                                "amount":"4",
+                                                "freshness":100
+                                                },
+                                                {
+                                                "name":"醤油",
+                                                "item_class":"seasoning",
+                                                "amount":"4",
+                                                "freshness":100
+                                                },
+                                                {
+                                                "name":"サラダ油",
+                                                "item_class":"other",
+                                                "amount":"4",
+                                                "freshness":100
+                                                },
+                                                {
+                                                "name":"だし汁",
+                                                "item_class":"other",
+                                                "amount":"4",
+                                                "freshness":100
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -169,8 +165,8 @@ class FirstViewController: UIViewController {
                      print("デコードしたよ")
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
-                    let encoded = try! encoder.encode(recipe_data)
-                     print("えんこーどしたよ")
+                    let encoded = try! encoder.encode(recipe_data.status)
+                    print("えんこーどしたよ")
                     print(String(data: encoded, encoding: .utf8)!)
                 }catch let tryerror as NSError{
                     print(tryerror.localizedDescription)
