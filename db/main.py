@@ -114,7 +114,7 @@ def db_exec(user):
 # 権限ある人用のDBリセットAPI
 @app.route("/operate/reset")
 @authorize
-def db_exec(user):
+def db_reset(user):
     if user == "admin":
         try:
             db.reset()
