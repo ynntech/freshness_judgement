@@ -9,10 +9,6 @@
 import UIKit
 import RealmSwift
 
-struct judge_Struct: Codable {
-    var item_class: String
-    var fleshness: Double
-}
 
 class SecondViewController: UIViewController {
 
