@@ -10,7 +10,6 @@ import Foundation
 struct Freshness: Codable {
     var status: String
     var vegi_info: Info
-    
     struct Info: Codable{
         var name:String
         var freshness:Double

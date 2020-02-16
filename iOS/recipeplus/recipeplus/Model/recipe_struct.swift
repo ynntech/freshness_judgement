@@ -20,20 +20,19 @@ struct Recipe: Codable {
             var peaple: Int
             var comment: String
             var guidace: [Guidance]
-       //   var thumbnail: String
-            var catchphrase: String
-            var ingredients:[Ingredients]
             struct Guidance: Codable{
                 var process: String
                // var thumbnail: String
             }
+       //   var thumbnail: String
+            var catchphrase: String
+            var ingredients:[Ingredients]
             struct Ingredients: Codable{
                 var name: String
-                var item_class: String
                 var amount: Double
                 var fleshness: Double
+                var item_class: String
             }
-
         }
     }
 }

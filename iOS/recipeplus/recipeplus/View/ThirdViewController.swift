@@ -9,6 +9,7 @@ import UIKit
 import RealmSwift
 import AVFoundation
 
+
 class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var ImageView: UIImageView!
     
@@ -36,7 +37,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if image != nil{
             print("通信中")
             let judge_session = URLSession.shared
-            let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/fresshness")!
+            let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
             var req: URLRequest = URLRequest(url: judge_url)
             req.httpMethod = "POST"
             req.setValue("application/json; charset=utf-8", forHTTPHeaderField:"ContentType")
@@ -52,6 +53,14 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                  //let post_task = URLSession.shared.dataTask(with: req, completionHandler: { (data, response, error) in
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
                          // do something
+                    
+                    let vegitest = try?JSONDecoder().decode(Test.self, from: data)
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = .prettyPrinted
+                    let encoded = try! encoder.encode(vegitest)
+                    print(String(data: encoded, encoding: .utf8)!)
+                    
+                    print("################")
                     print(String(data: data, encoding: .utf8)!)
                     print("response.statusCode:\(response.statusCode)")
                     let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
