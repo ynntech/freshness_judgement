@@ -56,7 +56,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
                          // do something
                     
-                    let vegitest = try?JSONDecoder().decode(Test.self, from: data)
+                    let vegitest = try?JSONDecoder().decode(Freshness.self, from: data)
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let encoded = try! encoder.encode(vegitest)

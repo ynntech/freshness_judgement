@@ -10,29 +10,44 @@ import Foundation
 // Codableの継承を忘れないこと！
 struct Recipe: Codable {
     var status: String
-    var responce : Responce
+    var response : Response
     
-    struct Responce: Codable{
+    private enum Recipe: String,CodingKey{
+       case status
+       case response
+    }
+    init(from decoder: Decoder) throws {
+       let values = try decoder.container(keyedBy: Recipe.self)
+       status = try values.decode(String.self,forKey:.status)
+       response = try values.decode(Response.self,forKey:.response)
+    }
+    func encode(to encoder: Encoder) throws {
+       var container = encoder.container(keyedBy: Recipe.self)
+       try container.encode(status, forKey: .status)
+    }
+    
+    
+    struct Response: Codable{
         var recipes: [Recipes]
-        
-        private enum Responce: String,CodingKey{
-                           case recipes
-                       }
-                       init(from decoder: Decoder) throws {
-                           let values = try decoder.container(keyedBy: Responce.self)
-                           recipes = try values.decode([Recipes].self,forKey:.recipes)
-                       }
-                       func encode(to encoder: Encoder) throws {
-                           var container = encoder.container(keyedBy: Responce.self)
-                           try container.encode(recipes, forKey: .recipes)
-                       }
+
+        private enum Response: String,CodingKey{
+           case recipes
+        }
+        init(from decoder: Decoder) throws {
+           let values = try decoder.container(keyedBy: Response.self)
+           recipes = try values.decode([Recipes].self,forKey:.recipes)
+        }
+        func encode(to encoder: Encoder) throws {
+           var container = encoder.container(keyedBy: Response.self)
+           try container.encode(recipes, forKey: .recipes)
+        }
         
         struct Recipes: Codable {
             var name: String
             var author: String
             var people: Int
             var comment: String
-            var guidace: [Guidance]
+            var guidance: [Guidance]
        //   var thumbnail: String
             var catchphrase: String
             var ingredients:[Ingredients]
@@ -42,7 +57,7 @@ struct Recipe: Codable {
                 case author
                 case people
                 case comment
-                case guidace
+                case guidance
                 case catchphrase
                 case ingredients
             }
@@ -53,7 +68,7 @@ struct Recipe: Codable {
                 author = try values.decode(String.self,forKey:.author)
                 people = try values.decode(Int.self,forKey:.people)
                 comment = try values.decode(String.self,forKey:.comment)
-                guidace = try values.decodeIfPresent([Guidance].self, forKey: .guidace)!
+                guidance = try (values.decodeIfPresent([Guidance].self, forKey: .guidance))!
                 catchphrase = try values.decode(String.self,forKey:.catchphrase)
                 ingredients = try values.decodeIfPresent([Ingredients].self, forKey: .ingredients)!
             }
@@ -63,7 +78,7 @@ struct Recipe: Codable {
                 try container.encode(author, forKey: .author)
                 try container.encode(people, forKey: .people)
                 try container.encode(comment, forKey: .comment)
-                try container.encode(guidace, forKey: .guidace)
+                try container.encode(guidance, forKey: .guidance)
                 try container.encode(catchphrase, forKey: .catchphrase)
                 try container.encode(ingredients, forKey: .ingredients)
             }

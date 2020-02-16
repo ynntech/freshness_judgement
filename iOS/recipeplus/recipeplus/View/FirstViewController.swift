@@ -12,33 +12,6 @@ import UIKit
 import RealmSwift
 import Foundation
 
-struct Test:Codable{
-    var status:String
-    var people :Int
-    private enum CodingKeys: String,CodingKey{
-        case status
-        case response
-    }
-    private enum ResponceKeys: String,CodingKey{
-        case people
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        status = try values.decode(String.self,forKey:.status)
-        
-        let responce = try values.nestedContainer(keyedBy: ResponceKeys.self, forKey: .response)
-        people = try responce.decode(Int.self, forKey: .people)
-    }
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(status, forKey: .status)
-
-        var responce = container.nestedContainer(keyedBy: ResponceKeys.self, forKey: .response)
-        try responce.encode(people, forKey: .people)
-    }
-}
-
 //冷蔵庫情報送信&レシピ表示
 class FirstViewController: UIViewController {
 
@@ -53,7 +26,7 @@ class FirstViewController: UIViewController {
 //        let session_config: URLSessionConfiguration = URLSessionConfiguration.default
 //        let recipe_session: URLSession = URLSession(configuration: session_config)
         let recipe_session = URLSession.shared
-        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/test/post")!
+        let recipe_url: URL = URL(string: "http://3.13.39.141:8888/request")!
         var req: URLRequest = URLRequest(url: recipe_url)
         
         //通常のアクセストークンでひとまずは。
@@ -112,23 +85,14 @@ class FirstViewController: UIViewController {
                 print("response.statusCode:\(response.statusCode)")
                 let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
                 print("result is:\(result)")
+  
                 
-                let newdata = """
-                {
-                    "status": "ok",
-                    "response":
-                    {
-                        "people":1
-                    }
-                }
-                """.data(using: .utf8)!
-                
-                let vegitest = try?JSONDecoder().decode(Test.self, from: newdata)
+                let recipe_data = try?JSONDecoder().decode(Recipe.self, from: data)
 //                print(vegitest as Any)
 //                print("status###: \(vegitest?.status)")
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
-                let encoded = try! encoder.encode(vegitest?.people)
+                let encoded = try! encoder.encode(recipe_data)
                 print(String(data: encoded, encoding: .utf8)!)
             }
         })
