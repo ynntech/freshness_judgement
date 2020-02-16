@@ -156,18 +156,17 @@ class FirstViewController: UIViewController {
                                 }
                             }
                            """.data(using: .utf8)!
-                    print("でーたよんだよ")
                     
                     
-                    let recipe_data = try JSONDecoder().decode(Recipe.self, from: jsondata)
+                    let recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
                     //                print(vegitest as Any)
                     //                print("status###: \(vegitest?.status)")
-                     print("デコードしたよ")
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let encoded = try! encoder.encode(recipe_data.status)
-                    print("えんこーどしたよ")
+                    let encoded2 = try! encoder.encode(recipe_data.response?.recipes?[0].name)
                     print(String(data: encoded, encoding: .utf8)!)
+                    print(String(data: encoded2, encoding: .utf8)!)
                 }catch let tryerror as NSError{
                     print(tryerror.localizedDescription)
                 }
