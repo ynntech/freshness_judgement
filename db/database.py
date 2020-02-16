@@ -55,35 +55,43 @@ class DataBase:
 
     def search(self, query, people=1):
         # 'query' should be an Item class object
+        # confirm the existance of specified vegetable
         db = self.cursor
-        amount = query.amount
-        table = "from ingredients"
-        fresh_query = f"where {query.name}_freshness={query.freshness}"
-        term = f"select id, people, {query.name}_amount {table} {fresh_query}"
-        db.execute(term)
-        fetched = db.fetchall()
-        results = []
-        for res in fetched:
-            # res[0]: recipe id
-            # res[1]: people(estimated number of savings)
-            # res[2]: consumption of the vegi in the recipe
-            if res[1] is None:
-                if float(res[2]) <= amount:
-                    results.append(str(res[0]))
+        name = query.name
+        term = f"show columns from ingredients like '{name}_freshness'"
+        if db.execute(term):
+            db.fetchall()
+            amount = query.amount
+            table = "from ingredients"
+            fresh_query = f"where {name}_freshness={query.freshness}"
+            term = f"select id, people, {name}_amount {table} {fresh_query}"
+            db.execute(term)
+            fetched = db.fetchall()
+            if amount is not None:
+                results = []
+                for res in fetched:
+                    # res[0]: recipe id
+                    # res[1]: people(estimated number of savings)
+                    # res[2]: consumption of the vegi in the recipe
+                    if amount is not None:
+                        if res[1] is None:
+                            if float(res[2]) <= amount:
+                                results.append(str(res[0]))
+                        else:
+                            if float(res[2]) / float(res[1]) <= amount / people:
+                                results.append(str(res[0]))
             else:
-                if float(res[2]) / float(res[1]) <= amount / people:
-                    results.append(str(res[0]))
-        # this method will return just a list of recipe id
-        return results
+                results = [str(res[0]) for res in fetched]
+            # this method will return just a list of recipe id
+            return results
+        else:
+            return []
 
     def get(self, id):
-        term = f"select id, content from recipes where id={id}"
+        term = f"select content from recipes where id={id}"
         self.cursor.execute(term)
         res = self.cursor.fetchone()
-        return {
-                "id":res[0],
-                "content":json.loads(res[1])
-                }
+        return json.loads(res[0])
 
     def get_recipes(self):
         term = f"select id, content from recipes"
@@ -124,7 +132,7 @@ class DataBase:
                 values.append(people)
 
             for ingredient in recipe["ingredients"]:
-                if ingredient["class"] == "vegetable":
+                if ingredient["item_class"] == "vegetable":
                     name = ingredient["name"]
                     amount = f"{name}_amount"
                     freshness = f"{name}_freshness"
@@ -155,4 +163,12 @@ class DataBase:
 
             length += 1
 
+        self.save()
+
+    def reset(self):
+        db = self.cursor
+        term = "delete from recipes"
+        db.execute(term)
+        term = "delete from ingredients"
+        db.execute(term)
         self.save()
