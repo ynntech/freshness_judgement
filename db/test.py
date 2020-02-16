@@ -39,42 +39,30 @@ def authorize(method):
 
 # 鮮度で最適化されたレシピのリクエストAPI
 @app.route("/request", methods=["POST"])
-@authorize
-def recipe_request(user):
-    if user in ["general", "admin"]:
-        data = request.get_json()
-        check_request(data=data)
-        client = Client(data=data)
-        return jsonify({
-                        "status":"OK",
-                        "response":db.suggest(client=client)
-                        })
-    else:
-        abort(401, "You are not authorized to perform this operation.")
+def recipe_request():
+    data = request.get_json()
+    check_request(data=data)
+    client = Client(data=data)
+    return jsonify({
+                    "status":"OK",
+                    "response":db.suggest(client=client)
+                    })
 
 # 全レシピデータの取得API
 @app.route("/request/recipes", methods=["GET"])
-@authorize
-def get_recipes(user):
-    if user in ["general", "admin"]:
-        return jsonify({
-                        "status":"OK",
-                        "response":db.get_recipes()
-                        })
-    else:
-        abort(401, "You are not authorized to perform this operation.")
+def get_recipes():
+    return jsonify({
+                    "status":"OK",
+                    "response":db.get_recipes()
+                    })
 
 # ingredientsテーブルの全情報取得API
 @app.route("/request/ingredients", methods=["GET"])
-@authorize
-def get_ingredients(user):
-    if user in ["general", "admin"]:
-        return jsonify({
-                        "status":"OK",
-                        "response":db.get_ingredients()
-                        })
-    else:
-        abort(401, "You are not authorized to perform this operation.")
+def get_ingredients():
+    return jsonify({
+                    "status":"OK",
+                    "response":db.get_ingredients()
+                    })
 
 # 新規レシピ登録API
 @app.route("/register", methods=["POST"])
@@ -92,7 +80,7 @@ def recipe_register(user):
 # 権限ある人用のSQL操作API
 @app.route("/operate/sql", methods=["POST"])
 @authorize
-def db_exec(user):
+def db_rest(user):
     if user == "admin":
         sql = request.get_json()
         try:
@@ -109,22 +97,7 @@ def db_exec(user):
                                         Please check your mysql syntax"
                             })
     else:
-        abort(403, "Request Forbidden.")
-
-# 権限ある人用のDBリセットAPI
-@app.route("/operate/reset")
-@authorize
-def db_reset(user):
-    if user == "admin":
-        try:
-            db.reset()
-            return jsonify({
-                            "status":"OK"
-                            })
-        except:
-            abort(500, "Unexpected error was occorred.")
-    else:
-        abort(403, "Request Forbidden.")
+        abort(403, "Request Forbidden")
 
 # test
 @app.route("/test")
@@ -147,6 +120,6 @@ def test_get():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="8888")
+    app.run(host="0.0.0.0", port="9999")
     db.exit()
     sys.exit()
