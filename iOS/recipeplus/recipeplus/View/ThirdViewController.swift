@@ -65,7 +65,9 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                          // do something
                     
                     //toたかはっし　これ以降は通信終わった後のレスポンスの処理のおはなしやで
+
                     let vegi = try?JSONDecoder().decode(Freshness.self, from: data)
+
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let encoded_name = try! encoder.encode(vegi?.name)
