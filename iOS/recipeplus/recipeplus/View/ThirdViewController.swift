@@ -65,9 +65,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                          // do something
                     
                     //toたかはっし　これ以降は通信終わった後のレスポンスの処理のおはなしやで
-
                     let vegi = try?JSONDecoder().decode(Freshness.self, from: data)
-
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let encoded_name = try! encoder.encode(vegi?.name)
@@ -102,13 +100,12 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     func updata_label(name:String,freshness:String){
         print("aaaaaaa")
         DispatchQueue.global().async {
-            // 重たい処理
             DispatchQueue.main.async {
-                // UIを更新する処理
+                self.vegi_namelabel.text = name
+                self.vegi_freshnesslabel.text = freshness
             }
         }
-        vegi_namelabel.text = name
-        vegi_freshnesslabel.text = freshness
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
