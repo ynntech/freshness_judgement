@@ -53,6 +53,8 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
             
             //toたかはっし　ここがリクエストbodyおくってるところやで
             req.httpBody = try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
+            // let jsonData =  try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
+           //  req.httpBody  = String(bytes: jsonData, encoding: .utf8)! とかにするとjsonの文字列として送れる。
             let post_task = judge_session.dataTask(with: req, completionHandler: { (data, response, error) in
                  //let post_task = URLSession.shared.dataTask(with: req, completionHandler: { (data, response, error) in
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
