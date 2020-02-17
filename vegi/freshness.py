@@ -14,9 +14,13 @@ import tensorflow as tf
 """
 import base64
 from io import BytesIO
+import json
 
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
+app.config["JSON_SORT_KEYS"] = False
+
 #英語の昇順
 vegis = ["きゃべつ", "にんじん", "ねぎ"]
 freshness_ = [0,50,100] # bad, good, verygood
@@ -33,14 +37,14 @@ with CustomObjectScope({'GlorotUniform': glorot_uniform()}):
 # load Pytorch model
 vegi_judge = models.resnet18(pretrained=True)
 num_ftrs = vegi_judge.fc.in_features
-vegi_judge.fc = nn.Sequential(nn.Linear(num_ftrs, 64),
+vegi_judge.fc = nn.Sequential(nn.Linear(num_ftrs, 256),
                               nn.ReLU(),
                               nn.Dropout(),
-                              nn.Linear(256,32),
+                              nn.Linear(256,64),
                               nn.ReLU(),
                               nn.Dropout(),
                               nn.Linear(64,3))
-vegi_judge.load_state_dict(torch.load("weights/vegi03.pth", map_location=torch.device('cpu')), False)
+vegi_judge.load_state_dict(torch.load("weights/vegi05.pth", map_location=torch.device('cpu')), False)
 
 
 def base64string2pillowimage(base64_str): 
@@ -82,28 +86,26 @@ def freshness():
             })
 
     if request.method == 'POST':
-        if 'image' not in request.get_json(): #あやしい
-            return jsonify({
-                "status": "No file",             
-             })
-        
-        #app.logger.info(request.get_json())
-        file = request.get_json().get("image") #あやしい
-        
-        #file = request.files["file"]
-        if file.filename == '':  #あやしい
-            return jsonify({
-                "status": "No file",             
-            })
+        print(request.is_json)
+        print(request.headers)
 
-        base64_str = file["content"].read()      #あやしい
+        if "file" not in request.get_json(): 
+            return jsonify({
+                "status" : "OK"
+                })
+
+        json_data = request.get_json() 
+        base64_str = json_data["file"]# base64strを取得
+     
         pillow_img = base64string2pillowimage(base64_str)
 
-        # vegi phese
+        
+        # vegi phese　野菜分類
         img_torch = pillowimage2torch(pillow_img)
         output = vegi_judge(img_torch)
         _, predict = torch.max(output, 1)
         vegi = vegis[predict]
+        
 
         """
         # freshness phese
@@ -113,6 +115,8 @@ def freshness():
             predicted = np.argmax(fn_judge.predict(img_keras)[0])
             freshness = freshness_[predicted]
             """     
+        
+        # 鮮度判定モデルは割愛してるので定数。
         freshness = 100
 
         return jsonify({
@@ -125,5 +129,5 @@ def freshness():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8080))
+    port = int(os.environ.get('PORT', 8080)) # herokuでPORT番号固定するのに一手間かかるため、サーバから指定される開いてるポートを使ってる
     app.run(host="0.0.0.0", port=port)
