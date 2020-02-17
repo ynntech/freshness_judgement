@@ -31,6 +31,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         //プレビュー表示
         self.ImageView.image = image
         let data:NSData = image.pngData()! as NSData
+        //toたかはっし　ここで、撮った写真imageをbase64にしてるやで
         let base64String = data.base64EncodedString(options: .lineLength64Characters)
         //よかったら保存
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -40,6 +41,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
             let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
             var req: URLRequest = URLRequest(url: judge_url)
             req.httpMethod = "POST"
+            //toたかはっし　ここがリクエストヘッダー
             req.addValue("application/json", forHTTPHeaderField: "Accept")
             req.addValue("application/json", forHTTPHeaderField:"ContentType")
             
@@ -49,13 +51,14 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                 "file":base64String
             ]
             
-
+            //toたかはっし　ここがリクエストbodyおくってるところやで
             req.httpBody = try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
             let post_task = judge_session.dataTask(with: req, completionHandler: { (data, response, error) in
                  //let post_task = URLSession.shared.dataTask(with: req, completionHandler: { (data, response, error) in
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
                          // do something
                     
+                    //toたかはっし　これ以降は通信終わった後のレスポンスの処理のおはなしやで
                     let vegitest = try?JSONDecoder().decode(Freshness.self, from: data)
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
