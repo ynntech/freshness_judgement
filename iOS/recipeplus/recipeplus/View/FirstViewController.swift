@@ -159,8 +159,8 @@ class FirstViewController: UIViewController {
                     
                     
                     let recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
-                    //                print(vegitest as Any)
-                    //                print("status###: \(vegitest?.status)")
+                    //                print(vegetest as Any)
+                    //                print("status###: \(vegetest?.status)")
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let encoded = try! encoder.encode(recipe_data.status)

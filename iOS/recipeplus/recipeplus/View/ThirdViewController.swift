@@ -11,13 +11,17 @@ import AVFoundation
 
 //カメラのところ
 class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var vege_name:String = ""
+    var vege_freshness:String = ""
+    var count:Int = 0
+    
+    @IBOutlet weak var amout_field: UITextField!
     @IBOutlet weak var ImageView: UIImageView!
-    var vegi_name:String = ""
-    var vegi_freshness:String = ""
-    @IBOutlet weak var vegi_namelabel: UILabel!
-    @IBOutlet weak var vegi_freshnesslabel: UILabel!
+    @IBOutlet weak var vege_namelabel: UILabel!
+    @IBOutlet weak var vege_freshnesslabel: UILabel!
+    
     @IBAction func startCamera(_ sender: UIBarButtonItem) {
-        
         let sourceType:UIImagePickerController.SourceType = UIImagePickerController.SourceType.camera
         //押されたら起動
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
@@ -40,6 +44,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         judgement_label()
         if image != nil{
+            count+=1
             print("通信中")
             let judge_session = URLSession.shared
             let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
@@ -66,20 +71,20 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                          // do something
                     
                     //toたかはっし　これ以降は通信終わった後のレスポンスの処理のおはなしやで
-                    let vegi = try?JSONDecoder().decode(Freshness.self, from: data)
+                    let vege = try?JSONDecoder().decode(Freshness.self, from: data)
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
-                    let encoded_name = try! encoder.encode(vegi?.name)
-                    let encoded_freshness = try! encoder.encode(vegi?.freshness)
+                    let encoded_name = try! encoder.encode(vege?.name)
+                    let encoded_freshness = try! encoder.encode(vege?.freshness)
                     var name = String(data: encoded_name, encoding: .utf8)!
                     let freshness = String(data: encoded_freshness, encoding: .utf8)!
                     print(String(data: encoded_name, encoding: .utf8)!)
                     print(String(data: encoded_freshness, encoding: .utf8)!)
-                    //self.vegi_name = String(data: encoded_name,encoding: .utf8)!
-                    //self.vegi_freshness = String(data: encoded_freshness, encoding: .utf8)!
+                    //self.vege_name = String(data: encoded_name,encoding: .utf8)!
+                    //self.vege_freshness = String(data: encoded_freshness, encoding: .utf8)!
                     name = String(name.suffix(name.count - 1))
                     name = String(name[name.startIndex..<name.index(before: name.endIndex)])
-                    self.update_label(name: name, freshness: freshness)
+                    self.update_label(name: name, freshness: freshness,count: self.count)
                   //  print(String(data: data, encoding: .utf8)!)
                     //print("response.statusCode:\(response.statusCode)")
                    // let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
@@ -95,11 +100,11 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     }
     
-    func update_label(name:String, freshness:String){
+    func update_label(name:String, freshness:String,count:Int){
         print("判定完了")
         DispatchQueue.global().async {
             DispatchQueue.main.async {
-                self.vegi_namelabel.text = name
+                self.vege_namelabel.text = name
                 var labeltext:String
                 let fresh_value:Int = Int(freshness)!
                 if fresh_value>=80{
@@ -109,10 +114,21 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                 }else{
                     labeltext = "食べられません"
                 }
-                self.vegi_freshnesslabel.text = labeltext
+                self.vege_freshnesslabel.text = labeltext
                 //ここにリアルムのやつ追加
+                let vege = Vegetable()
+                vege.item_class = "vegetable"
+                vege.name = name
+                vege.freshness = Double(fresh_value)
+                let amount = (self.amout_field.text ?? "1")
+                vege.amount = Double(amount)!
                 
-                
+                var config = Realm.Configuration()
+                config.deleteRealmIfMigrationNeeded = true
+                let realm = try! Realm(configuration: config)
+                try! realm.write {
+                    realm.add(vege)
+                }
             }
         }
     }
@@ -120,8 +136,8 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         print("判定中")
         DispatchQueue.global().async {
             DispatchQueue.main.async {
-                self.vegi_namelabel.text = "判定中"
-                self.vegi_freshnesslabel.text = "判定中"
+                self.vege_namelabel.text = "判定中"
+                self.vege_freshnesslabel.text = "判定中"
             }
         }
     }
