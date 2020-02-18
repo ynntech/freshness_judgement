@@ -53,12 +53,18 @@ class FirstViewController: UIViewController {
         posttest.name = "にんじん"
         posttest.amount = 3.0
         posttest.freshness = 50.0
-        /*
-         本当に呼び出すときはこれでフィルタリングとか
-         for item in realm.objects(Vegetable.self).filter("name == %@",textbox.text ?? "aaa"){
-             name_label.text = String(item.amount)
+        
+        var config = Realm.Configuration()
+        config.deleteRealmIfMigrationNeeded = true
+        let realm = try! Realm(configuration: config)
+//        try! realm.write {
+//            realm.deleteAll()
+//        }
+         for item in realm.objects(Vegetable.self).filter("item_class == %@","vegetable"){
+             print("item.amount: \(item.amount)")
+
          }
-         */
+         
         
         //書き換わるならvarかも
         let params:[String: Any] = [
@@ -68,7 +74,13 @@ class FirstViewController: UIViewController {
               "name":posttest.name,
               "amount":posttest.amount,
               "freshness":posttest.freshness
-            ]
+            ],
+            [
+              "item_class":posttest.item_class,
+              "name":posttest.name,
+              "amount":posttest.amount,
+              "freshness":posttest.freshness
+            ],
           ],
           "people":1,
           "show":1
@@ -198,9 +210,7 @@ class FirstViewController: UIViewController {
         test1.amount = 10
         test1.freshness = 0.0
         
-        var config = Realm.Configuration()
-        config.deleteRealmIfMigrationNeeded = true
-        let realm = try! Realm(configuration: config)
+       
         try! realm.write {
             realm.add(test)
             realm.add(test1)
