@@ -38,6 +38,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         let base64String = data.base64EncodedString(options: .lineLength64Characters)
         //よかったら保存
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        judgement_label()
         if image != nil{
             print("通信中")
             let judge_session = URLSession.shared
@@ -70,24 +71,21 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     encoder.outputFormatting = .prettyPrinted
                     let encoded_name = try! encoder.encode(vegi?.name)
                     let encoded_freshness = try! encoder.encode(vegi?.freshness)
-                    let name = String(data: encoded_name, encoding: .utf8)!
+                    var name = String(data: encoded_name, encoding: .utf8)!
                     let freshness = String(data: encoded_freshness, encoding: .utf8)!
                     print(String(data: encoded_name, encoding: .utf8)!)
                     print(String(data: encoded_freshness, encoding: .utf8)!)
                     //self.vegi_name = String(data: encoded_name,encoding: .utf8)!
                     //self.vegi_freshness = String(data: encoded_freshness, encoding: .utf8)!
-                    self.updata_label(name: name, freshness: freshness)
-                    print("################")
+                    name = String(name.suffix(name.count - 1))
+                    name = String(name[name.startIndex..<name.index(before: name.endIndex)])
+                    self.update_label(name: name, freshness: freshness)
                   //  print(String(data: data, encoding: .utf8)!)
                     //print("response.statusCode:\(response.statusCode)")
                    // let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
                     //print("result is:\(result)")
                     }
-                print("################")
                  })
-            print("################")
-
-
                 post_task.resume()
         }
          
@@ -97,15 +95,35 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     }
     
-    func updata_label(name:String,freshness:String){
-        print("aaaaaaa")
+    func update_label(name:String, freshness:String){
+        print("判定完了")
         DispatchQueue.global().async {
             DispatchQueue.main.async {
                 self.vegi_namelabel.text = name
-                self.vegi_freshnesslabel.text = freshness
+                var labeltext:String
+                let fresh_value:Int = Int(freshness)!
+                if fresh_value>=80{
+                    labeltext = "新鮮です"
+                }else if fresh_value>=40{
+                    labeltext = "まだ食べれます"
+                }else{
+                    labeltext = "食べられません"
+                }
+                self.vegi_freshnesslabel.text = labeltext
+                //ここにリアルムのやつ追加
+                
+                
             }
         }
-        
+    }
+    func judgement_label(){
+        print("判定中")
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                self.vegi_namelabel.text = "判定中"
+                self.vegi_freshnesslabel.text = "判定中"
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
