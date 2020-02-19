@@ -1,3 +1,9 @@
+"""
+コメントアウトを外すとそのままkerasの鮮度判定モデルが動くはず
+requirements.txtに以下を追記
+Keras==2.2.5
+tensorflow==1.15.2
+"""
 import os
 from flask import Flask, request, jsonify, abort
 from werkzeug.utils import secure_filename
@@ -5,7 +11,7 @@ import numpy as np
 from PIL import Image
 import torch
 import torch.nn as nn
-from torchvision import models
+from torchvision import models, transforms
 """
 from keras.models import load_model
 from keras.utils import CustomObjectScope
@@ -44,7 +50,27 @@ vegi_judge.fc = nn.Sequential(nn.Linear(num_ftrs, 256),
                               nn.ReLU(),
                               nn.Dropout(),
                               nn.Linear(64,3))
-vegi_judge.load_state_dict(torch.load("weights/vegi05.pth", map_location=torch.device('cpu')), False)
+vegi_judge.load_state_dict(torch.load("weights/vegi08.pth", map_location=torch.device('cpu')))
+vegi_judge.eval()
+
+class MyDataset(torch.utils.data.Dataset):
+
+    def __init__(self, data, label, transform=None):
+        self.transform = transform
+        self.data = data
+        self.data_num = len(data)
+        self.label = label
+
+    def __len__(self):
+        return self.data_num
+
+    def __getitem__(self, idx):
+        out_data = self.data[idx]
+        out_label = self.label[idx]
+        if self.transform:
+          out_data = self.transform(out_data)
+
+        return out_data, out_label
 
 
 def base64string2pillowimage(base64_str): 
@@ -54,20 +80,24 @@ def base64string2pillowimage(base64_str):
     return img
 
 
-def pillowimage2torch(img):
-    img = img.resize((128,128))
-    img = np.array(img)
-    img = np.transpose(img, (2,0,1))
-    img = np.expand_dims(img, axis=0)
-    img = torch.Tensor(img)
-    return img
+def pillowImage2torchDataLoader(img):
+    transform = transforms.Compose([
+        transforms.Resize((128,128)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406],[0.229, 0.224, 0.225])
+    ])
+
+    dataset = MyDataset([img], [0], transform=transform)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=1)
+ 
+    return dataloader
 
 
 def pillowimage2keras(img):
     img = img.resize((224,224))
     img = np.array(img)
     img = np.expand_dims(img, axis=0)
-    img = img[:, :, ::-1]
+    #img = img[:, :, ::-1]
     return img
 
 
@@ -97,14 +127,15 @@ def freshness():
         json_data = request.get_json() 
         base64_str = json_data["file"]# base64strを取得
      
-        pillow_img = base64string2pillowimage(base64_str)
-
-        
+        pillow_img = base64string2pillowimage(base64_str) # base64strをPilloImageに変換
+     
         # vegi phese　野菜分類
-        img_torch = pillowimage2torch(pillow_img)
-        output = vegi_judge(img_torch)
-        _, predict = torch.max(output, 1)
-        vegi = vegis[predict]
+        dataloader = pillowImage2torchDataLoader(pillow_img)
+        for inputs, labels in dataloader:
+            output = vegi_judge(inputs)
+            print(output)
+            _, predict = torch.max(output, 1)
+            vegi = vegis[predict]
         
 
         """
@@ -118,12 +149,15 @@ def freshness():
         
         # 鮮度判定モデルは割愛してるので定数。
         freshness = 100
+        item_class = "vegetable" if vegi in vegis else "other"
 
         return jsonify({
             "status": "OK",
             "vegi_info":{
+                "item_class": item_class,
                 "name": vegi,
                 "freshness": freshness,
+                "amount": "1"
             }
         })
 
