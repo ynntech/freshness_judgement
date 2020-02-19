@@ -11,7 +11,7 @@ import AVFoundation
 
 //カメラのところ
 class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
-
+    var alertController: UIAlertController!
     var vege_name:String = ""
     var vege_freshness:String = ""
     var status = 0
@@ -51,6 +51,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                         realm.add(vege)
                     }
                     self.status = 0
+                    self.alert(title: "登録しました",message: "今日も一日おつかれさまです！")
                })
                // キャンセルボタンの処理
                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
@@ -83,7 +84,15 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     
-   
+   func alert(title:String, message:String) {
+         alertController = UIAlertController(title: title,
+                                    message: message,
+                                    preferredStyle: .alert)
+         alertController.addAction(UIAlertAction(title: "OK",
+                                        style: .default,
+                                        handler: nil))
+         present(alertController, animated: true)
+     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         status = 0
@@ -136,7 +145,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     //self.vege_freshness = String(data: encoded_freshness, encoding: .utf8)!
                     name = String(name.suffix(name.count - 1))
                     name = String(name[name.startIndex..<name.index(before: name.endIndex)])
-                    self.update_label(name: name, freshness: freshness,count: self.count)
+                    self.update_label(name: name, freshness: freshness)
                     self.status = 0
                     }
                  })
@@ -149,13 +158,13 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     }
     
-    func update_label(name:String, freshness:String,count:Int){
+    func update_label(name:String, freshness:String){
         print("判定完了")
         DispatchQueue.global().async {
             DispatchQueue.main.async {
                 self.vege_namelabel.text = name
                 self.amountlabel.text = "1"
-                self.discriptionlabel.text = "--タップで個数変更--"
+                self.discriptionlabel.text = "-- タップで変更 --"
                 var labeltext:String
                 self.fresh_value = Double(freshness)!
                 if self.fresh_value>=80{
