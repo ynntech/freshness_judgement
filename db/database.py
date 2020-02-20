@@ -45,7 +45,8 @@ class DataBase:
                 else:
                     recipes[tmp_cash[result]][1] += 1
         # sort with count
-        recipes = sorted(recipes, key=lambda x:x[1])
+        if len(recipes) != 0:
+            recipes = sorted(recipes, key=lambda x:x[1])
         tmp_len = len(recipes)
 
         # if we do not have enough recipes
@@ -60,7 +61,8 @@ class DataBase:
                     else:
                         recipes[tmp_cash[result]][1] += 1
             # sort with count
-            recipes[tmp_len:] = sorted(recipes[tmp_len:], key=lambda x:x[1])
+            if len(recipes) != 0:
+                recipes[tmp_len:] = sorted(recipes[tmp_len:], key=lambda x:x[1])
 
         final_results = []
         for recipe in recipes:
