@@ -3,12 +3,11 @@
     {
       "author":"",
       "name":"",
-      "thumbnail":"path to photo",
       "catchphrase":"",
       "people":1,
       "ingredients":[
         {
-          "class":"vegetable/seasoning/meet/other",
+          "item_class":"vegetable/seasoning/meet/other",
           "name":"",
           "amount":0,
           "freshness":100
@@ -16,7 +15,6 @@
       ],
       "guidance":[
         {
-          "thumbnail":"path to photo",
           "process":""
         }
       ],

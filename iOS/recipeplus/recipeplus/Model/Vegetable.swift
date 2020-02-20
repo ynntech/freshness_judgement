@@ -14,7 +14,7 @@ import RealmSwift
 class Vegetable: Object {
     @objc dynamic var item_class :String = "vegetable"
     @objc dynamic var name :String = ""
-    @objc dynamic var amount :Int = 0
+    @objc dynamic var amount :Double = 0.0
     @objc dynamic var freshness : Double = 0.0
 }
   

@@ -1,1 +1,1 @@
-{"ingredients":[{"class":"vegetable","name":"にんじん","amount":1,"freshness":50}],"people":1,"show":5}
+{"ingredients":[{"item_class":"vegetable","name":"にんじん","amount":1,"freshness":50}],"people":1,"show":5}

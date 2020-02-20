@@ -1,7 +1,7 @@
 {
   "ingredients":[
     {
-      "class":"vegetable/seasoning/meet/other",
+      "item_class":"vegetable/seasoning/meet/other",
       "name":"",
       "amount":1,
       "freshness":100

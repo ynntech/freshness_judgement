@@ -3,32 +3,32 @@
 #basic Item class
 class Item:
     # 各アイテムの鮮度updateメソッドは、クライアントアプリ側で実装
-    def __init__(self, name, amount, freshness, _class="vegetable"):
+    def __init__(self, name, amount, freshness, item_class="vegetable"):
         self.name = name
         self.amount = amount
         self.freshness = freshness
-        self.item_class = _class
+        self.item_class = item_class
 
 # client class
 class Client:
     def __init__(self, data):
         self.data = data
-        self.people = data["people"]
-        self.show = data["show"]
+        self.people = data["people"] if data["people"] is not None else 1
+        self.show = data["show"] if data["show"] is not None else 4
         self.load()
 
     def load(self):
         vegis = []
         for ingredient in self.data["ingredients"]:
-            item_class = ingredient["class"]
+            item_class = ingredient["item_class"]
             if item_class != "vegetable":
                 continue
             else:
                 item_name = ingredient["name"]
-                item_amount = ingredient["amount"]
-                item_freshness = ingredient["freshness"]
+                item_amount = float(ingredient["amount"])
+                item_freshness = float(ingredient["freshness"])
                 vegis.append(Item(name=item_name, amount=item_amount,
-                                freshness=item_freshness, _class=item_class))
+                                freshness=item_freshness, item_class=item_class))
         self.state = vegis
         self._unfresh_idx = self.sort_fresh()
 
