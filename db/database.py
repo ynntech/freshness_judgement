@@ -2,6 +2,7 @@
 import MySQLdb
 import json
 import datetime
+import random
 
 # ・use most unfresh vegi(s)
 # ・as possible, use only the vegis client have
@@ -43,14 +44,35 @@ class DataBase:
                     recipes.append([result, 1])
                 else:
                     recipes[tmp_cash[result]][1] += 1
-        # sort & slice with 'show' num
+        # sort with count
         recipes = sorted(recipes, key=lambda x:x[1])
-        if len(recipes) > client.show:
-            recipes = recipes[:client.show]
+        tmp_len = len(recipes)
+
+        # if we do not have enough recipes
+        if len(recipes) < client.show:
+            for vegi in client.fresh:
+                # DataBase.search(query) will return recipe name Series
+                results = self.search(vegi, people=client.people)
+                for result in results:
+                    if result not in tmp_cash:
+                        tmp_cash[result] = len(recipes)
+                        recipes.append([result, 1])
+                    else:
+                        recipes[tmp_cash[result]][1] += 1
+            # sort with count
+            recipes[tmp_len:] = sorted(recipes[tmp_len:], key=lambda x:x[1])
 
         final_results = []
         for recipe in recipes:
             final_results.append(self.get(recipe[0]))
+
+        shortage = client.show - len(final_results)
+        if shortage > 0:
+            excepts = list(tmp_cash.keys())
+            final_results.extend(self.get_random(num=shortage, excepts=excepts))
+        else:
+            final_results = final_results[:client.show]
+
         return {"recipes":final_results}
 
     def search(self, query, people=1):
@@ -73,13 +95,11 @@ class DataBase:
                     # res[0]: recipe id
                     # res[1]: people(estimated number of savings)
                     # res[2]: consumption of the vegi in the recipe
-                    if amount is not None:
-                        if res[1] is None:
-                            if float(res[2]) <= amount:
-                                results.append(str(res[0]))
-                        else:
-                            if float(res[2]) / float(res[1]) <= amount / people:
-                                results.append(str(res[0]))
+                    if res[1] is not None:
+                        if float(res[2]) / float(res[1]) <= amount / people:
+                            results.append(str(res[0]))
+                    else:
+                        results.append(str(res[0]))
             else:
                 results = [str(res[0]) for res in fetched]
             # this method will return just a list of recipe id
@@ -92,6 +112,18 @@ class DataBase:
         self.cursor.execute(term)
         res = self.cursor.fetchone()
         return json.loads(res[0])
+
+    def get_random(self, num=1, excepts=[]):
+        # excepts: id list for exception
+        term = f"select id, content from recipes"
+        self.cursor.execute(term)
+        res = self.cursor.fetchall()
+
+        results = []
+        for r in res:
+            if r[0] not in excepts:
+                results.append(json.loads(r[1]))
+        return random.sample(results, num)
 
     def get_recipes(self):
         term = f"select id, content from recipes"
