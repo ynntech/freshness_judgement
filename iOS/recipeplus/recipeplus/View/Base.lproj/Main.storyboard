@@ -64,7 +64,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="458-pB-ri2"/>
             </objects>
-            <point key="canvasLocation" x="747.82608695652175" y="-577.23214285714278"/>
+            <point key="canvasLocation" x="745" y="-913"/>
         </scene>
         <!--Title-->
         <scene sceneID="wg7-f3-ORb">
@@ -105,6 +105,11 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="1" alpha="0.20999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KLI-1Q-U7w">
                                 <rect key="frame" x="67" y="397" width="240" height="128"/>
@@ -130,6 +135,11 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="1" alpha="0.20999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Tj-hD-LjC">
                                 <rect key="frame" x="309" y="50" width="37" height="46"/>
@@ -184,6 +194,11 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="1" alpha="0.21070772058823528" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -206,12 +221,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="up" id="WxL-rs-5JB"/>
             </objects>
-            <point key="canvasLocation" x="705" y="341"/>
+            <point key="canvasLocation" x="745" y="-191"/>
         </scene>
         <!--ShowRecipeViewController-->
         <scene sceneID="BuL-TL-X2i">
             <objects>
-                <viewController storyboardIdentifier="ShowRecipeViewController" title="ShowRecipeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OLC-T5-gYN" customClass="ShowRecipeViewController" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowRecipeViewController" title="ShowRecipeViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OLC-T5-gYN" customClass="ShowRecipeViewController" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tO4-yf-UJE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -227,6 +242,46 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wV-jV-pX4">
+                                        <rect key="frame" x="87" y="163" width="197" height="156"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="材料" image="食材.png"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="ingredients_button:" destination="OLC-T5-gYN" eventType="touchUpInside" id="Sxc-yd-seT"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="食材" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JJM-PX-BKQ">
+                                        <rect key="frame" x="167" y="327" width="40" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="20"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="レシピ詳細" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVW-Zi-1NW">
+                                        <rect key="frame" x="137" y="575" width="100" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="20"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tds-C7-grZ">
+                                        <rect key="frame" x="96" y="380" width="183" height="187"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="レシピ.png"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="detail_button:" destination="OLC-T5-gYN" eventType="touchUpInside" id="LZc-aR-W6E"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="1" alpha="0.21235795454545456" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             </view>
@@ -236,11 +291,61 @@
                     </view>
                     <connections>
                         <outlet property="titlelabel" destination="C5v-im-aue" id="CKm-6C-s7K"/>
+                        <segue destination="QaB-gO-sv0" kind="show" identifier="showSegue" id="oQ8-hn-9ah"/>
+                        <segue destination="bnH-Tf-UUQ" kind="show" identifier="detailSegue" id="sNS-0I-WXy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4a-xL-HES" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1584.8" y="385.71428571428572"/>
+            <point key="canvasLocation" x="1505" y="-191"/>
+        </scene>
+        <!--Show Detail View Controller-->
+        <scene sceneID="1H8-PC-L7z">
+            <objects>
+                <viewController storyboardIdentifier="ShowDetailViewController" modalTransitionStyle="crossDissolve" id="bnH-Tf-UUQ" customClass="ShowDetailViewController" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qjx-3k-293">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="v71-7j-wtb"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7Co-UD-1co"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vJg-Oh-Rwo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2473" y="205"/>
+        </scene>
+        <!--Show Ingredients View Controller-->
+        <scene sceneID="K6n-aI-WOW">
+            <objects>
+                <viewController storyboardIdentifier="ShowIngredientsViewController" modalTransitionStyle="crossDissolve" id="QaB-gO-sv0" customClass="ShowIngredientsViewController" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="14f-iF-ro1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtT-yn-ccN">
+                                <rect key="frame" x="28" y="8" width="314" height="122"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="具材！！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozh-oj-jF8">
+                                <rect key="frame" x="150" y="272" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="5sb-4g-9rq"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QXb-Jb-dOB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vh3-PH-6l0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2474" y="-522"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -403,7 +508,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CWc-XS-xAW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="dGu-rc-d0i"/>
             </objects>
-            <point key="canvasLocation" x="1677.5999999999999" y="-332.51231527093597"/>
+            <point key="canvasLocation" x="745" y="519"/>
         </scene>
         <!--Todoリスト-->
         <scene sceneID="iA6-X8-pM2">
@@ -464,7 +569,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHv-bX-bvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2703" y="387"/>
+            <point key="canvasLocation" x="4158" y="372"/>
         </scene>
     </scenes>
     <resources>
@@ -474,5 +579,7 @@
         <image name="list.dash" catalog="system" width="64" height="42"/>
         <image name="plus.app.fill" catalog="system" width="64" height="56"/>
         <image name="plus.circle" catalog="system" width="64" height="60"/>
+        <image name="レシピ.png" width="732" height="800"/>
+        <image name="食材.png" width="800" height="800"/>
     </resources>
 </document>

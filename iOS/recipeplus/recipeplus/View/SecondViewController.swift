@@ -319,9 +319,9 @@ class SecondViewController: UIViewController {
         print("いまprepareやで")
              if segue.identifier == "showrecipeSegue" {
                  let nextVC = segue.destination as! ShowRecipeViewController
-                print("recipe_data: \(String(describing: recipe_data))")
-                print("recipe_data.status\(String(describing: recipe_data.status))")
-                 nextVC.data = recipe_data
+              //  print("recipe_data: \(String(describing: recipe_data!))")
+                print("recipe_data.status:\(String(describing: recipe_data.status!))")
+                 nextVC.data = recipe_data!
                 nextVC.number = number
              }
     }
@@ -387,21 +387,30 @@ class SecondViewController: UIViewController {
               print("response.statusCode:\(response.statusCode)")
               let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
               print("result is:\(result)")
-              do{
-                    self.recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = .prettyPrinted
-                    let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)
-                    let name2 = try! encoder.encode(self.recipe_data.response?.recipes?[1].name)
-                    let name3 = try! encoder.encode(self.recipe_data.response?.recipes?[2].name)
-                    print(String(data: name1, encoding: .utf8)!)
-                    print(String(data: name2, encoding: .utf8)!)
-                    print(String(data: name3, encoding: .utf8)!)
-                self.updata_label(data:self.recipe_data, name1: String(data: name1, encoding: .utf8)!, name2: String(data: name2, encoding: .utf8)!, name3: String(data: name3, encoding: .utf8)!)
-              }catch let tryerror as NSError{
-                  print(tryerror.localizedDescription)
-              }
-              
+//              do{
+//                self.recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
+//                    let encoder = JSONEncoder()
+//                    encoder.outputFormatting = .prettyPrinted
+//                    let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)
+//                    let name2 = try! encoder.encode(self.recipe_data.response?.recipes?[1].name)
+//                    let name3 = try! encoder.encode(self.recipe_data.response?.recipes?[2].name)
+//                    print(String(data: name1, encoding: .utf8)!)
+//                    print(String(data: name2, encoding: .utf8)!)
+//                    print(String(data: name3, encoding: .utf8)!)
+//                self.updata_label(data:self.recipe_data, name1: String(data: name1, encoding: .utf8)!, name2: String(data: name2, encoding: .utf8)!, name3: String(data: name3, encoding: .utf8)!)
+//              }catch let tryerror as NSError{
+//                  print(tryerror.localizedDescription)
+//              }
+            self.recipe_data = try!JSONDecoder().decode(Recipe.self, from: data)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)
+            let name2 = try! encoder.encode(self.recipe_data.response?.recipes?[1].name)
+            let name3 = try! encoder.encode(self.recipe_data.response?.recipes?[2].name)
+            print(String(data: name1, encoding: .utf8)!)
+            print(String(data: name2, encoding: .utf8)!)
+            print(String(data: name3, encoding: .utf8)!)
+            
           }
         })
         post_task.resume()

@@ -50,6 +50,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     try! realm.write {
                         realm.add(vege)
                     }
+                
                     self.status = 0
                     self.alert(title: "登録しました",message: "今日も一日おつかれさまです！")
                })

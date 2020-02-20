@@ -10,6 +10,10 @@
 		2D8D0230ACA0192EFAE9AC8B /* libPods-recipeplusTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F045738F074DA27364F9CE6 /* libPods-recipeplusTests.a */; };
 		693DD72C4A48F64DEB957A29 /* libPods-recipeplus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A7720F82B975DA9F548DB5 /* libPods-recipeplus.a */; };
 		D10D6E3023F1577D00CAFC9B /* Vegetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D6E2F23F1577D00CAFC9B /* Vegetable.swift */; };
+		D199279C23FEC28A008351C0 /* ShowIngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D199279B23FEC28A008351C0 /* ShowIngredientsViewController.swift */; };
+		D199279E23FEC7BB008351C0 /* 食材.png in Resources */ = {isa = PBXBuildFile; fileRef = D199279D23FEC7BB008351C0 /* 食材.png */; };
+		D19927A023FEC8D4008351C0 /* レシピ.png in Resources */ = {isa = PBXBuildFile; fileRef = D199279F23FEC8D4008351C0 /* レシピ.png */; };
+		D19927A223FECC97008351C0 /* ShowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19927A123FECC97008351C0 /* ShowDetailViewController.swift */; };
 		D1A6D16723FD2D150059755C /* ShowRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6D16623FD2D150059755C /* ShowRecipeViewController.swift */; };
 		D1D304F023F90AC2007229BA /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D304EF23F90AC2007229BA /* Recipe.swift */; };
 		D1D304F223F91E9D007229BA /* freshness_struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D304F123F91E9D007229BA /* freshness_struct.swift */; };
@@ -54,6 +58,10 @@
 		CB40F0BDD2DFCB19154CDEC7 /* Pods-recipeplusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipeplusTests.release.xcconfig"; path = "Target Support Files/Pods-recipeplusTests/Pods-recipeplusTests.release.xcconfig"; sourceTree = "<group>"; };
 		CBDDB5B04B1E22CB83C67662 /* Pods-recipeplus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipeplus.release.xcconfig"; path = "Target Support Files/Pods-recipeplus/Pods-recipeplus.release.xcconfig"; sourceTree = "<group>"; };
 		D10D6E2F23F1577D00CAFC9B /* Vegetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vegetable.swift; sourceTree = "<group>"; };
+		D199279B23FEC28A008351C0 /* ShowIngredientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowIngredientsViewController.swift; sourceTree = "<group>"; };
+		D199279D23FEC7BB008351C0 /* 食材.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "食材.png"; sourceTree = "<group>"; };
+		D199279F23FEC8D4008351C0 /* レシピ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "レシピ.png"; sourceTree = "<group>"; };
+		D19927A123FECC97008351C0 /* ShowDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailViewController.swift; sourceTree = "<group>"; };
 		D1A6D16623FD2D150059755C /* ShowRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRecipeViewController.swift; sourceTree = "<group>"; };
 		D1D304EF23F90AC2007229BA /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		D1D304F123F91E9D007229BA /* freshness_struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freshness_struct.swift; sourceTree = "<group>"; };
@@ -183,6 +191,10 @@
 				D1F2B9BF23ED764A00CEBE26 /* SecondViewController.swift */,
 				D1F2BA2923ED8F7F00CEBE26 /* ThirdViewController.swift */,
 				D1A6D16623FD2D150059755C /* ShowRecipeViewController.swift */,
+				D199279B23FEC28A008351C0 /* ShowIngredientsViewController.swift */,
+				D19927A123FECC97008351C0 /* ShowDetailViewController.swift */,
+				D199279F23FEC8D4008351C0 /* レシピ.png */,
+				D199279D23FEC7BB008351C0 /* 食材.png */,
 				D1F2B9C123ED764A00CEBE26 /* Main.storyboard */,
 				D1F2B9C623ED764C00CEBE26 /* LaunchScreen.storyboard */,
 			);
@@ -309,6 +321,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D19927A023FEC8D4008351C0 /* レシピ.png in Resources */,
+				D199279E23FEC7BB008351C0 /* 食材.png in Resources */,
 				D1F2B9C823ED764C00CEBE26 /* LaunchScreen.storyboard in Resources */,
 				D1F2B9C523ED764C00CEBE26 /* Assets.xcassets in Resources */,
 				D1F2B9C323ED764A00CEBE26 /* Main.storyboard in Resources */,
@@ -413,7 +427,9 @@
 				D1F2B9BA23ED764A00CEBE26 /* AppDelegate.swift in Sources */,
 				D1D304F023F90AC2007229BA /* Recipe.swift in Sources */,
 				D10D6E3023F1577D00CAFC9B /* Vegetable.swift in Sources */,
+				D199279C23FEC28A008351C0 /* ShowIngredientsViewController.swift in Sources */,
 				D1F2B9BC23ED764A00CEBE26 /* SceneDelegate.swift in Sources */,
+				D19927A223FECC97008351C0 /* ShowDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
