@@ -14,7 +14,7 @@ class Client:
     def __init__(self, data):
         self.data = data
         self.people = data["people"] if data["people"] is not None else 1
-        self.show = data["show"] if data["show"] is not None else 4
+        self.show = data["show"] if data["show"] is not None else 3
         self.load()
 
     def load(self):
@@ -46,3 +46,7 @@ class Client:
     @property
     def unfresh(self):
         return self.state[:self._unfresh_idx]
+
+    @property
+    def fresh(self):
+        return self.state[self._unfresh_idx:]
