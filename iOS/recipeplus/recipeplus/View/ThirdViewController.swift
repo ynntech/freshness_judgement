@@ -19,7 +19,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var amout_field: UITextField!
     @IBOutlet weak var ImageView: UIImageView!
     @IBOutlet weak var vege_namelabel: UITextField!
-    @IBOutlet weak var vege_freshnesslabel: UILabel!
+    @IBOutlet weak var vege_freshnesslabel: UITextField!
     @IBOutlet weak var discriptionlabel: UILabel!
     @IBOutlet weak var amountlabel: UITextField!
     
