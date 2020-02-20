@@ -211,28 +211,32 @@
         <!--ShowRecipeViewController-->
         <scene sceneID="BuL-TL-X2i">
             <objects>
-                <viewController storyboardIdentifier="ShowRecipeViewController" title="ShowRecipeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OLC-T5-gYN" customClass="ShowRecipeViewContoroller" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowRecipeViewController" title="ShowRecipeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OLC-T5-gYN" customClass="ShowRecipeViewController" customModule="recipeplus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tO4-yf-UJE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBD-my-MEV" userLabel="titilelabel">
-                                <rect key="frame" x="50" y="50" width="275" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E0T-hm-2Xd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5v-im-aue">
+                                        <rect key="frame" x="28" y="8" width="314" height="122"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="23"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="1" alpha="0.18781333556149732" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="pDd-O5-Arb"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="JUe-55-VTb"/>
+                    <connections>
+                        <outlet property="titlelabel" destination="C5v-im-aue" id="CKm-6C-s7K"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4a-xL-HES" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
