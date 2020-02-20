@@ -13,6 +13,7 @@ import RealmSwift
 class SecondViewController: UIViewController {
     var peaple:String = "1"
     var recipe_data:Recipe!
+    var number = 0
     let jsondata = """
              {
                  "status":"OK",
@@ -269,7 +270,7 @@ class SecondViewController: UIViewController {
                     do{
                         //name, author,
                         
-                        let recipe_data = try JSONDecoder().decode(Recipe.self, from: self.jsondata)
+                        let recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
                         let encoder = JSONEncoder()
                         encoder.outputFormatting = .prettyPrinted
                         let name1 = try! encoder.encode(recipe_data.response?.recipes?[0].name)
@@ -295,8 +296,9 @@ class SecondViewController: UIViewController {
     
     
     @IBAction func show1(_ sender: Any) {
-        
-         self.performSegue(withIdentifier: "showrecipeSegue", sender: nil)
+        print("ぼたんおされたやで")
+         number = 0
+         performSegue(withIdentifier: "showrecipeSegue", sender: nil)
 
     }
   
@@ -304,17 +306,23 @@ class SecondViewController: UIViewController {
     
     
     @IBAction func show2(_ sender: Any) {
-        self.performSegue(withIdentifier: "showrecipeSegue", sender: self)
+        number = 1
+        performSegue(withIdentifier: "showrecipeSegue", sender: nil)
     }
     
     @IBAction func show3(_ sender: Any) {
-        self.performSegue(withIdentifier: "showrecipeSegue", sender: self)
+        number = 2
+        performSegue(withIdentifier: "showrecipeSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-             if segue.identifier == "SecondViewController" {
+        print("いまprepareやで")
+             if segue.identifier == "showrecipeSegue" {
                  let nextVC = segue.destination as! ShowRecipeViewController
+                print("recipe_data: \(String(describing: recipe_data))")
+                print("recipe_data.status\(String(describing: recipe_data.status))")
                  nextVC.data = recipe_data
+                nextVC.number = number
              }
     }
     override func viewDidLoad() {
@@ -380,7 +388,7 @@ class SecondViewController: UIViewController {
               let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
               print("result is:\(result)")
               do{
-                    self.recipe_data = try JSONDecoder().decode(Recipe.self, from: self.jsondata)
+                    self.recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)

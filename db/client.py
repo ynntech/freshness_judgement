@@ -14,7 +14,7 @@ class Client:
     def __init__(self, data):
         self.data = data
         self.people = data["people"] if data["people"] is not None else 1
-        self.show = data["show"] if data["show"] is not None else 4
+        self.show = data["show"] if data["show"] is not None else 3
         self.load()
 
     def load(self):
@@ -30,7 +30,8 @@ class Client:
                 vegis.append(Item(name=item_name, amount=item_amount,
                                 freshness=item_freshness, item_class=item_class))
         self.state = vegis
-        self._unfresh_idx = self.sort_fresh()
+        if len(self.state) != 0:
+            self._unfresh_idx = self.sort_fresh()
 
     def sort_fresh(self):
         self.state = sorted(self.state, key=lambda x:(x.freshness, x.amount))
@@ -45,4 +46,14 @@ class Client:
 
     @property
     def unfresh(self):
-        return self.state[:self._unfresh_idx]
+        if len(self.state) != 0:
+            return self.state[:self._unfresh_idx]
+        else:
+            return []
+
+    @property
+    def fresh(self):
+        if len(self.state) != 0:
+            return self.state[self._unfresh_idx:]
+        else:
+            return []
