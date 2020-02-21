@@ -407,6 +407,7 @@ class SecondViewController: UIViewController {
             let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)
             let name2 = try! encoder.encode(self.recipe_data.response?.recipes?[1].name)
             let name3 = try! encoder.encode(self.recipe_data.response?.recipes?[2].name)
+            self.updata_label(data: self.recipe_data, name1: String(data: name1, encoding: .utf8)!, name2: String(data: name2, encoding: .utf8)!, name3: String(data: name3, encoding: .utf8)!)
             print(String(data: name1, encoding: .utf8)!)
             print(String(data: name2, encoding: .utf8)!)
             print(String(data: name3, encoding: .utf8)!)

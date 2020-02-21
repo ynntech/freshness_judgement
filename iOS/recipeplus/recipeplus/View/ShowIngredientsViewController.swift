@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 class  ShowIngredientsViewController: UIViewController {
-    var ingredients:[Recipe.Response.Recipes.Ingredients]!
-        override func viewDidLoad() {
-                print("showingligentsVCやで")
-                super.viewDidLoad()
-                
-                print(ingredients![0].name!)
-                print(ingredients![1].name!)
-            }
+var ingredients:[Recipe.Response.Recipes.Ingredients]!
+      override func viewDidLoad() {
+              print("showingligentsVCやで")
+              super.viewDidLoad()
+              
+              print(ingredients![0].name!)
+              print(ingredients![1].name!)
+          }
 
-    }
+  }
     

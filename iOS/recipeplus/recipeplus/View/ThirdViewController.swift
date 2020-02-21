@@ -109,7 +109,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if image != nil{
             print("通信中")
             let judge_session = URLSession.shared
-            let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
+            let judge_url: URL = URL(string: "http://54.65.240.71:8888/freshness")!
             var req: URLRequest = URLRequest(url: judge_url)
             req.httpMethod = "POST"
             //toたかはっし　ここがリクエストヘッダー
