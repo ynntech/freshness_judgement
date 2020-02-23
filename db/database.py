@@ -46,7 +46,7 @@ class DataBase:
                     recipes[tmp_cash[result]][1] += 1
         # sort with count
         if len(recipes) != 0:
-            recipes = sorted(recipes, key=lambda x:x[1])
+            recipes = sorted(recipes, key=lambda x:x[1], reverse=True)
         tmp_len = len(recipes)
 
         # if we do not have enough recipes
@@ -62,7 +62,9 @@ class DataBase:
                         recipes[tmp_cash[result]][1] += 1
             # sort with count
             if len(recipes) != 0:
-                recipes[tmp_len:] = sorted(recipes[tmp_len:], key=lambda x:x[1])
+                recipes[tmp_len:] = sorted(recipes[tmp_len:],
+                                           key=lambda x:x[1],
+                                           reverse=True)
 
         final_results = []
         for recipe in recipes:
@@ -123,7 +125,7 @@ class DataBase:
 
         results = []
         for r in res:
-            if r[0] not in excepts:
+            if str(r[0]) not in excepts:
                 results.append(json.loads(r[1]))
         return random.sample(results, num)
 
