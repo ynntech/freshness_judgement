@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 class  ShowDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var recipe_name: UILabel!
-        
-        var guidance:[Recipe.Response.Recipes.Guidance]!
+    
+    
+
+    var guidance:[Recipe.Response.Recipes.Guidance]!
         var data:Recipe!
         var name:String = ""
         var processArray:[String] = []
@@ -23,7 +25,11 @@ class  ShowDetailViewController: UIViewController, UITableViewDelegate, UITableV
             for i in 0...guidance!.count-1{
                 processArray.append("\(guidance[i].process!)")
             }
+            
             print("processArray\(processArray)")
+            
+           
+   
         
         }
     
@@ -38,8 +44,10 @@ class  ShowDetailViewController: UIViewController, UITableViewDelegate, UITableV
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         // セルに表示する値を設定する
         print("guidance[indexPath.row].process は　\(String(describing: guidance[indexPath.row].process))")
+        
         cell.textLabel!.text = processArray[indexPath.row]
- 
+        cell.textLabel!.adjustsFontSizeToFitWidth = true
+        cell.textLabel!.numberOfLines = 0
         return cell
     }
 }
