@@ -236,19 +236,23 @@ class SecondViewController: UIViewController {
            
               var vege_array:[String:Any] = [:]
               var recipe:[Any] = []
-
+              print("本日は\(getToday())")
+              
               for item in realm.objects(Vegetable.self).filter("item_class == %@","vegetable"){
-                  print("item.amount: \(item.amount)")
-                  print("item.name: \(item.name)")
-                  vege_array = ["item_class":item.item_class, "name":item.name, "amount":item.amount, "freshness":item.freshness]
-                  recipe.append(vege_array)
+                    let date_interval = getIntervalDays(date: item.timestamp)+1
+                    print("item.amount: \(item.amount)")
+                    print("item.name: \(item.name)")
+                    print("item.timestanp: \(item.timestamp)")
+                    print("本日との差分は\(date_interval)日です")
+                    let default_savedate = default_dic[item.name]
+                    let new_freshnes  = item.freshness - Double(date_interval)/Double(default_savedate!) * 100
+                    vege_array = ["item_class":item.item_class, "name":item.name, "amount":item.amount, "freshness":new_freshnes]
+                    recipe.append(vege_array)
 
               }
-              print("vege_array: \(vege_array)")
-
               //書き換わるならvarかも
               let params:[String: Any]
-              
+              print("vege_array: \(vege_array)")
               
                params = [
               "ingredients":
@@ -266,7 +270,7 @@ class SecondViewController: UIViewController {
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
                     print("response.statusCode:\(response.statusCode)")
                     let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
-                    print("result is:\(result)")
+                    //print("result is:\(result)")
                     do{
                         //name, author,
                         
@@ -315,6 +319,34 @@ class SecondViewController: UIViewController {
         performSegue(withIdentifier: "showrecipeSegue", sender: nil)
     }
     
+    //日付の差分を計算する関数
+    func getIntervalDays(date:Date?,anotherDay:Date? = nil) -> Double {
+
+        var retInterval:Double!
+
+        if anotherDay == nil {
+            retInterval = date?.timeIntervalSinceNow
+        } else {
+            retInterval = date?.timeIntervalSince(anotherDay!)
+        }
+
+        let ret = retInterval/86400
+
+        return floor(ret)  // n日
+    }
+    
+    //今日の日付をきれいに表示
+    func getToday(format:String = "yyyy/MM/dd HH:mm:ss") -> String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: now as Date)
+    }
+
+
+
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("いまprepareやで")
              if segue.identifier == "showrecipeSegue" {
@@ -356,12 +388,18 @@ class SecondViewController: UIViewController {
      
         var vege_array:[String:Any] = [:]
         var recipe:[Any] = []
-
+        print("本日は\(getToday())")
+        
         for item in realm.objects(Vegetable.self).filter("item_class == %@","vegetable"){
-            print("item.amount: \(item.amount)")
-            print("item.name: \(item.name)")
-            vege_array = ["item_class":item.item_class, "name":item.name, "amount":item.amount, "freshness":item.freshness]
-            recipe.append(vege_array)
+              let date_interval = getIntervalDays(date: item.timestamp)+1
+              print("item.amount: \(item.amount)")
+              print("item.name: \(item.name)")
+              print("item.timestanp: \(item.timestamp)")
+              print("本日との差分は\(date_interval)日です")
+              let default_savedate = default_dic[item.name]
+              let new_freshnes  = item.freshness - (Double(date_interval)/Double(default_savedate!) * 100)
+              vege_array = ["item_class":item.item_class, "name":item.name, "amount":item.amount, "freshness":new_freshnes]
+              recipe.append(vege_array)
 
         }
         print("vege_array: \(vege_array)")
@@ -386,21 +424,7 @@ class SecondViewController: UIViewController {
           if error == nil, let data = data, let response = response as? HTTPURLResponse {
               print("response.statusCode:\(response.statusCode)")
               let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
-              print("result is:\(result)")
-//              do{
-//                self.recipe_data = try JSONDecoder().decode(Recipe.self, from: data)
-//                    let encoder = JSONEncoder()
-//                    encoder.outputFormatting = .prettyPrinted
-//                    let name1 = try! encoder.encode(self.recipe_data.response?.recipes?[0].name)
-//                    let name2 = try! encoder.encode(self.recipe_data.response?.recipes?[1].name)
-//                    let name3 = try! encoder.encode(self.recipe_data.response?.recipes?[2].name)
-//                    print(String(data: name1, encoding: .utf8)!)
-//                    print(String(data: name2, encoding: .utf8)!)
-//                    print(String(data: name3, encoding: .utf8)!)
-//                self.updata_label(data:self.recipe_data, name1: String(data: name1, encoding: .utf8)!, name2: String(data: name2, encoding: .utf8)!, name3: String(data: name3, encoding: .utf8)!)
-//              }catch let tryerror as NSError{
-//                  print(tryerror.localizedDescription)
-//              }
+            //  print("result is:\(result)")
             self.recipe_data = try!JSONDecoder().decode(Recipe.self, from: data)
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
@@ -446,3 +470,16 @@ class SecondViewController: UIViewController {
     
     }
 
+extension Date {
+
+    func toStringWithCurrentLocale() -> String {
+
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale.current
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        return formatter.string(from: self)
+    }
+
+}

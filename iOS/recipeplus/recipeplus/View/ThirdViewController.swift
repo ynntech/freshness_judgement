@@ -34,15 +34,17 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                    (action: UIAlertAction!) -> Void in
                    //実際の処理
                     print("登録")
-                    
+                    TimeZone(identifier: "Asia/Tokyo")
+                    let dt = Date()
+        
                     let vege = Vegetable()
                     vege.item_class = "vegetable"
                     vege.name = self.vege_namelabel.text ?? "-"
                     vege.freshness = self.fresh_value
                     vege.amount = Double(self.amout_field.text ?? "1")!
+                    vege.timestamp = dt
+                
                     print("vege.name:\(vege.name)")
-
-
 
                     var config = Realm.Configuration()
                     config.deleteRealmIfMigrationNeeded = true
@@ -95,6 +97,10 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
          present(alertController, animated: true)
      }
     
+    
+    
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         status = 0
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
@@ -109,10 +115,11 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if image != nil{
             print("通信中")
             let judge_session = URLSession.shared
-            let judge_url: URL = URL(string: "http://54.65.240.71:8888/freshness")!
+            //let judge_url: URL = URL(string: "http://54.65.240.71:8888/freshness")!
+            let judge_url: URL = URL(string: "https://vegi-freshness.herokuapp.com/freshness")!
             var req: URLRequest = URLRequest(url: judge_url)
             req.httpMethod = "POST"
-            //toたかはっし　ここがリクエストヘッダー
+            //ここがリクエストヘッダー
             req.addValue("application/json", forHTTPHeaderField: "Accept")
             req.addValue("application/json", forHTTPHeaderField:"Content-Type")
             
@@ -122,7 +129,7 @@ class ThirdViewController: UIViewController, UIImagePickerControllerDelegate, UI
                 "file":base64String
             ]
             
-            //toたかはっし　ここがリクエストbodyおくってるところやで
+            //ここがリクエストbodyおくってるところやで
             req.httpBody = try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
             // let jsonData =  try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
            //  req.httpBody  = String(bytes: jsonData, encoding: .utf8)! とかにするとjsonの文字列として送れる。

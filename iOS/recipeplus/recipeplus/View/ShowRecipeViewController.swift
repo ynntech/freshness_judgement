@@ -26,6 +26,7 @@ class  ShowRecipeViewController: UIViewController {
     var number:Int = 0
     var count = 0
     override func viewDidLoad() {
+        
         print("showrecipeVCやで")
         super.viewDidLoad()
         label = (String(data: try! encoder.encode(data.response?.recipes?[number].name), encoding: .utf8) ?? nil)!
