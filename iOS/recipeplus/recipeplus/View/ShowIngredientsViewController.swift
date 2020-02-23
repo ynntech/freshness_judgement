@@ -8,15 +8,44 @@
 
 import Foundation
 import UIKit
-class  ShowIngredientsViewController: UIViewController {
+class  ShowIngredientsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var name:String = ""
+    var nameArray:[String] = []
+    var count = 0
     var ingredients:[Recipe.Response.Recipes.Ingredients]!
-        override func viewDidLoad() {
-                print("showingligentsVCやで")
-                super.viewDidLoad()
-                
-                print(ingredients![0].name!)
-                print(ingredients![1].name!)
-            }
+    
 
+    @IBOutlet weak var recipe_name: UILabel!
+
+
+      override func viewDidLoad() {
+              print("showingligentsVCやで")
+              super.viewDidLoad()
+              recipe_name.text = name
+              for i in 0...ingredients!.count-1{
+                  nameArray.append("\(ingredients[i].name!) : \(String(ingredients[i].amount!))")
+              }
+        
+        print(nameArray)
+          }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("tableviewの関数1やで")
+        return ingredients.count
     }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // セルを取得する
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        // セルに表示する値を設定する
+        print("ingredients[indexPath.row].name は　\(String(describing: ingredients[indexPath.row].name))")
+        
+        cell.textLabel!.text = nameArray[indexPath.row]
+        cell.textLabel!.adjustsFontSizeToFitWidth = true
+        cell.textLabel!.numberOfLines = 0
+        
+        return cell
+    }
+  }
     

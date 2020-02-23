@@ -11,6 +11,7 @@ import UIKit
 class  ShowRecipeViewController: UIViewController {
     @IBOutlet weak var titlelabel: UILabel!
     
+    
     @IBAction func detail_button(_ sender: Any) {
         performSegue(withIdentifier: "detailSegue", sender: nil)
     }
@@ -18,32 +19,40 @@ class  ShowRecipeViewController: UIViewController {
         performSegue(withIdentifier: "showSegue", sender: nil)
     }
     var ingredients = [Recipe.Response.Recipes.Ingredients]()
+    var guitance = [Recipe.Response.Recipes.Guidance]()
     let encoder = JSONEncoder()
     var data:Recipe!
+    var label:String = ""
     var number:Int = 0
+    var count = 0
     override func viewDidLoad() {
+        
         print("showrecipeVCやで")
         super.viewDidLoad()
-        var label:String = (String(data: try! encoder.encode(data.response?.recipes?[number].name), encoding: .utf8) ?? nil)!
+        label = (String(data: try! encoder.encode(data.response?.recipes?[number].name), encoding: .utf8) ?? nil)!
         print("label:\(label)")
         label = String(label.suffix(label.count - 1))
         label = String(label[label.startIndex..<label.index(before: label.endIndex)])
         titlelabel!.text = label
         ingredients = (data.response?.recipes?[number].ingredients)!
-//        for i in data?.response?.recipes?[number].ingredients?.count{
-//
-//        }
-        
+        guitance = (data.response?.recipes?[number].guidance)!
 
-        print(ingredients[0].name!)
-        print(ingredients[1].name!)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          print("いまprepareやで")
               if segue.identifier == "showSegue" {
-                  let nextVC = segue.destination as! ShowIngredientsViewController
-                  nextVC.ingredients = ingredients
-              }
+                
+                    let nextVC = segue.destination as! ShowIngredientsViewController
+                    nextVC.ingredients = ingredients
+                    nextVC.name = label
+        }
+         if segue.identifier == "detailSegue" {
+                    let nextVC = segue.destination as! ShowDetailViewController
+                    nextVC.guidance = guitance
+                    nextVC.name = label
+        }
+
+              
      }
     
     
