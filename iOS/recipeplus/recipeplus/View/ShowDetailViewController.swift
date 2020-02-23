@@ -25,12 +25,7 @@ class  ShowDetailViewController: UIViewController, UITableViewDelegate, UITableV
             for i in 0...guidance!.count-1{
                 processArray.append("\(guidance[i].process!)")
             }
-            
             print("processArray\(processArray)")
-            
-           
-   
-        
         }
     
     

@@ -42,6 +42,9 @@ class  ShowIngredientsViewController: UIViewController, UITableViewDelegate, UIT
         print("ingredients[indexPath.row].name は　\(String(describing: ingredients[indexPath.row].name))")
         
         cell.textLabel!.text = nameArray[indexPath.row]
+        cell.textLabel!.adjustsFontSizeToFitWidth = true
+        cell.textLabel!.numberOfLines = 0
+        
         return cell
     }
   }
